@@ -1,6 +1,6 @@
 #pragma once
-#include "Texture.h"
-#include "shaderClass.h"
+#include "GameObject/Texture.h"
+#include "GameObject/shaderClass.h"
 #include <map>
 
 

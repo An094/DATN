@@ -3,5 +3,5 @@
 #include<GLFW/glfw3.h>
 
 //#include "Singleton.h"
-#include "ResourceManager.h"
+#include "GameManager/ResourceManager.h"
 #include "Window.h"
