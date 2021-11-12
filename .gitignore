@@ -1,0 +1,10 @@
+#Directories
+.vs/
+x64/
+Debug/
+GameEngine/bin/
+GameEngine/x64/
+Sandbox/x64/
+
+#Files
+*.user
