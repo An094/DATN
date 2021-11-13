@@ -180,7 +180,7 @@
     <ClCompile Include="src\GameObject\VAO.cpp" />
     <ClCompile Include="src\GameObject\VBO.cpp" />
     <ClCompile Include="src\glad.c" />
-    <ClCompile Include="src\Window.cpp" />
+    <ClCompile Include="src\GameObject\Window.cpp" />
     <ClCompile Include="src\utilities.h" />
   </ItemGroup>
   <ItemGroup>
@@ -193,7 +193,7 @@
     <ClInclude Include="src\GameObject\Texture.h" />
     <ClInclude Include="src\GameObject\VAO.h" />
     <ClInclude Include="src\GameObject\VBO.h" />
-    <ClInclude Include="src\Window.h" />
+    <ClInclude Include="src\GameObject\Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
