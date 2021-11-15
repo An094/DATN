@@ -1,5 +1,8 @@
 #pragma once
-#include "utilities.h"
+//#include "utilities.h"
+#include<iostream>
+#include<glad/glad.h>
+#include<GLFW/glfw3.h>
 class Window
 {
 private:

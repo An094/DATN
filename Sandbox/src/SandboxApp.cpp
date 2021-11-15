@@ -1,4 +1,4 @@
-#include"utilities.h" // first
+#include"GameObject/Window.h" // first
 #include "Config.h"
 
 void Init(Window*& window)
@@ -12,4 +12,5 @@ int main()
 	Window* window = NULL;
 	Init(window);
 	window->Run();
+	return 0;
 }

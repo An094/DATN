@@ -1,5 +1,6 @@
 #include "Window.h"
-
+#include "Application.h"
+void window_resize(GLFWwindow* window, int width, int height);
 Window::Window(GLint width, GLint height, std::string name)
 	: m_width(width), m_height(height), m_name(name)
 {
@@ -39,7 +40,9 @@ void Window::Init()
 	// Introduce the window into the current context
 	glfwMakeContextCurrent(m_window);
 
+	//Register callback function
 	glfwSetWindowUserPointer(m_window, this);
+	glfwSetWindowSizeCallback(m_window, window_resize);
 	glfwSetKeyCallback(m_window, key_callback);
 	glfwSetMouseButtonCallback(m_window, mouse_button_callback);
 	glfwSetCursorPosCallback(m_window, cursor_position_callback);
@@ -58,19 +61,20 @@ void Window::Init()
 	glClear(GL_COLOR_BUFFER_BIT);
 	// Swap the back buffer with the front buffer
 	glfwSwapBuffers(m_window);
+
+	Application::GetInstance()->Init();
 }
 
 void Window::Update(GLfloat deltaTime)
 {
-	glfwPollEvents();
-	// Swap the back buffer with the front buffer
-	glfwSwapBuffers(m_window);
+	Application::GetInstance()->Update(deltaTime);
+
 }
 
 void Window::Draw()
 {
 	//Todo
-
+	Application::GetInstance()->Draw();
 	return;
 }
 
@@ -90,16 +94,16 @@ void Window::Run()
 	while (!glfwWindowShouldClose(m_window))
 	{
 		currentTime = (float)glfwGetTime();
-		//std::cout << "currentTime:" << currentTime << std::endl;
 		deltaTime = currentTime - lastTime;
 		lastTime = currentTime;
 
-		//std::cout << "deltaTime:" << deltaTime << std::endl;
-
-
+		Clear();
 		Update(deltaTime);
 		Draw();
-		Clear();
+
+		glfwPollEvents();
+		// Swap the back buffer with the front buffer
+		glfwSwapBuffers(m_window);
 	}
 
 	// Delete window before ending the program
@@ -116,13 +120,20 @@ void Window::key_callback(GLFWwindow* window, int key, int scancode, int action,
 
 void Window::HandleKeyEvent(int key, bool isPressed)
 {
-	if (!isPressed) std::cout << "Key: " << key << std::endl;
+	if (!isPressed)
+	{
+		std::cout << "Key: " << key << std::endl;
+		Application::GetInstance()->HandleKeyEvent(key, isPressed);
+	}
 }
 
 void Window::mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
 	Window* win = (Window*)glfwGetWindowUserPointer(window);
-	win->HandleTouchEvent(win->mx, win->my, action == GLFW_RELEASE ? true : false);
+	if (button == 0)
+	{
+		win->HandleTouchEvent(win->mx, win->my, action == GLFW_RELEASE ? true : false);
+	}
 }
 
 void Window::cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
@@ -137,5 +148,11 @@ void Window::HandleTouchEvent(double xpos, double ypos, bool isPressed)
 	if (!isPressed)
 	{
 		std::cout << "x: " << xpos << "y: " << ypos << std::endl;
+		Application::GetInstance()->HandleTouchEvent(xpos, ypos, isPressed);
 	}
+}
+
+void window_resize(GLFWwindow* window, int width, int height)
+{
+	glViewport(0, 0, width, height);
 }
