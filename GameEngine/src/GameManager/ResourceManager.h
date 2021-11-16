@@ -1,24 +1,19 @@
 #pragma once
 #include<iostream>
+#include <map>
+#include<memory>
 #include "GameObject/Texture.h"
 #include "GameObject/shaderClass.h"
 #include "GameObject/Model.h"
-#include <map>
 
 
-class ResourceManager //: public Singleton<ResourceManager>
+class ResourceManager
 {
 public:
 	ResourceManager();
 	~ResourceManager();
-
-	static std::shared_ptr<ResourceManager> GetInstance()
-	{
-		if (s_Instance == nullptr)
-			s_Instance = std::make_shared<ResourceManager>();
-		return s_Instance;
-	}
-
+	static std::shared_ptr<ResourceManager> GetInstance();
+	void Init();
 	void AddShader(const std::string& name);
 	void AddTexture(const std::string& name);
 	void AddModel(const std::string& name);
@@ -26,8 +21,8 @@ public:
 	std::shared_ptr<Shader> GetShader(const std::string& name);
 	std::shared_ptr<Texture> GetTexture(const std::string& name);
 	std::shared_ptr<Model> GetModel(const std::string& name);
-
 private:
+	std::string m_DataPath;
 	std::string m_ShaderPath;
 	std::string m_TexturePath;
 	std::string m_ModelPath;

@@ -26,6 +26,6 @@ Model::Model(const std::string& fileName)
 		std::getline(ss, strtmp, '\n');
 		rs = sscanf_s(strtmp.c_str(), "%d, %d, %d", &indices[3 * i], &indices[3 * i + 1], &indices[3 * i + 2]);
 	}
-	m_VBO = new VBO(vertices, sizeof(vertices));
-	m_EBO = new EBO(indices, sizeof(indices));
+	m_VBO = std::make_shared<VBO>(vertices, sizeof(vertices));
+	m_EBO = std::make_shared<EBO>(indices, sizeof(indices));
 }

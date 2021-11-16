@@ -120,11 +120,7 @@ void Window::key_callback(GLFWwindow* window, int key, int scancode, int action,
 
 void Window::HandleKeyEvent(int key, bool isPressed)
 {
-	if (!isPressed)
-	{
-		std::cout << "Key: " << key << std::endl;
 		Application::GetInstance()->HandleKeyEvent(key, isPressed);
-	}
 }
 
 void Window::mouse_button_callback(GLFWwindow* window, int button, int action, int mods)

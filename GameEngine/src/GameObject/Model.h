@@ -7,11 +7,11 @@ class EBO;
 class Model
 {
 private:
-	VBO* m_VBO;
-	EBO* m_EBO;
+	std::shared_ptr<VBO> m_VBO;
+	std::shared_ptr<EBO> m_EBO;
 public:
 	Model(const std::string& fileName );
-	inline VBO* getVBO() { return m_VBO; }
-	inline EBO* getEBO() { return m_EBO; }
+	inline std::shared_ptr <VBO> getVBO() { return m_VBO; }
+	inline std::shared_ptr <EBO> getEBO() { return m_EBO; }
 };
 
