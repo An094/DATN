@@ -87,6 +87,11 @@ void ResourceManager::AddTexture(const std::string& name)
 	{
 		return;
 	}
+	std::shared_ptr<Texture> texture;
+	std::string path = m_TexturePath + name;
+	texture = std::make_shared<Texture>(path.c_str());
+
+	m_MapTexture[name] = texture;
 }
 
 std::shared_ptr<Model> ResourceManager::GetModel(const std::string& name)
@@ -105,7 +110,6 @@ std::shared_ptr<Model> ResourceManager::GetModel(const std::string& name)
 
 std::shared_ptr<Shader> ResourceManager::GetShader(const std::string& name)
 {
-	//return m_shader;
 	std::map<std::string, std::shared_ptr<Shader>>::iterator  it = m_MapShader.find(name);
 	if (it != m_MapShader.end())
 	{
@@ -126,4 +130,10 @@ std::shared_ptr<Texture> ResourceManager::GetTexture(const std::string& name)
 	{
 		return it->second;
 	}
+
+	std::shared_ptr<Texture> texture;
+	std::string path = m_TexturePath + name;
+	texture = std::make_shared<Texture>(path.c_str());
+
+	return texture;
 }

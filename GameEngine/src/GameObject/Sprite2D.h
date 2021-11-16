@@ -1,5 +1,8 @@
 #pragma once
 #include <iostream>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 class Model;
 class Shader;
@@ -8,13 +11,22 @@ class Sprite2D
 {
 private:
 	std::shared_ptr<Model> m_Model;
-	std::shared_ptr<Texture> m_Texture;
 	std::shared_ptr<Shader> m_Shader;
-	int m_xPos, m_yPos;
+	std::shared_ptr<Texture> m_Texture;
+	glm::vec2 m_Position;
+	glm::mat4 m_TransMatrix;
+	glm::mat4 m_RotateMatrix;
+	glm::mat4 m_ScaleMatrix;
 public:
-	Sprite2D(std::shared_ptr<Model>, std::shared_ptr<Texture>, std::shared_ptr<Shader>);
+	Sprite2D(std::shared_ptr<Model>, std::shared_ptr<Shader>, std::shared_ptr<Texture>);
 	~Sprite2D();
 
-	void SetPosition();
+	void SetPosition(glm::vec2 pos);
+	inline glm::vec2 GetPosition() { return m_Position; }
+
+	void SetSize(int width, int height);
+
+	void Init();
+	void Draw();
 };
 
