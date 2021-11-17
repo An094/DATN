@@ -5,8 +5,10 @@
 #include "EBO.h"
 #include "Texture.h"
 
-//extern GLint width;
-//extern GLint height;
+extern GLint widthScreen;
+extern GLint heightScreen;
+//int width = 800;
+//int height = 800;
 
 Sprite2D::Sprite2D(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture)
 	:m_Model(model), m_Shader(shader), m_Texture(texture)
@@ -63,12 +65,18 @@ void Sprite2D::Draw()
 	ebo->Unbind();
 }
 
-void Sprite2D::SetPosition(glm::vec2 pos)
+void Sprite2D::SetPosition(int xpos, int ypos)
 {
-	m_Position = pos;
+	glm::vec2 temp;
+	temp.x = (xpos - widthScreen * 0.5f) * 2.0f / widthScreen;
+	temp.y = (ypos - widthScreen * 0.5f) * 2.0f / widthScreen;
+	m_TransMatrix = glm::translate(m_TransMatrix, glm::vec3(temp.x, temp.y, 0.0f));
 }
 
 void Sprite2D::SetSize(int width, int height)
 {
-	return;
+	glm::vec2 temp;
+	temp.x = width * 1.0f / widthScreen;
+	temp.y = height * 1.0f / heightScreen;
+	m_ScaleMatrix = glm::scale(m_ScaleMatrix, glm::vec3(temp.x, temp.y, 0.0f));
 }

@@ -28,7 +28,7 @@ public:
 	inline glm::mat4 GetRotateMatrix() { return m_RotateMatrix; }
 	inline glm::mat4 GetScaleMatrix() { return m_ScaleMatrix; }
 
-	void SetPosition(glm::vec2 pos);
+	void SetPosition(int xpos, int ypos);
 	inline glm::vec2 GetPosition() { return m_Position; }
 
 	void SetSize(int width, int height);

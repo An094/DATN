@@ -3,7 +3,7 @@
 
 void Init(Window*& window)
 {
-	window = new Window(width, height, nameWindow);
+	window = new Window(widthScreen, heightScreen, nameWindow);
 }
 
 
