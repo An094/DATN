@@ -60,6 +60,9 @@
     <ClCompile Include="src\GameObject\Sprite2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\GameObject\SpriteAnimation2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject\Camera.h">
@@ -101,6 +104,9 @@
     <ClInclude Include="src\GameObject\Sprite2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\GameObject\SpriteAnimation2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\Shaders\Texture.fs" />
@@ -108,6 +114,8 @@
     <None Include="Data\Data.inl">
       <Filter>Header Files</Filter>
     </None>
+    <None Include="Data\Shaders\Animation.fs" />
+    <None Include="Data\Shaders\Animation.vs" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Data\Models\Texture.txt" />

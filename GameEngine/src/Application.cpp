@@ -5,6 +5,7 @@
 #include "EBO.h"
 #include "Model.h"
 #include "Sprite2D.h"
+#include "SpriteAnimation2D.h"
 #include "ResourceManager.h"
 std::shared_ptr<Application> Application::s_Instance = nullptr;
 Application::Application()
@@ -19,44 +20,33 @@ Application::~Application()
 
 void Application::Init()
 {
-	//[IMPORTANT] Create VAO before Initialize data 
-	// Generates Vertex Array Object and binds it
-	//m_VAO = std::make_shared<VAO>();
-	//m_VAO->Bind();
-
 	////Initialize data
 	ResourceManager::GetInstance()->Init();
 
-	//m_Shader = ResourceManager::GetInstance()->GetShader("Texture");
-	//std::shared_ptr<Model> model = ResourceManager::GetInstance()->GetModel("Texture");
-	//
-	//m_VAO->LinkAttrib(model->getVBO(), 0, 3, GL_FLOAT, 5 * sizeof(float), (void*)0);
-	//m_VAO->LinkAttrib(model->getVBO(), 1, 2, GL_FLOAT, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-	//// Unbind all to prevent accidentally modifying them
-	//m_VAO->Unbind();
-
-
-	m_Shader = ResourceManager::GetInstance()->GetShader("Texture");
+	/*m_Shader = ResourceManager::GetInstance()->GetShader("Texture");
 	m_Model = ResourceManager::GetInstance()->GetModel("Texture");
-	m_Texture = ResourceManager::GetInstance()->GetTexture("sunset.png");
+	m_Texture = ResourceManager::GetInstance()->GetTexture("Logo.tga");
 
-	m_sprite2d = std::make_shared<Sprite2D>(m_Model, m_Shader, m_Texture);
+	m_sprite2d = std::make_shared<Sprite2D>(m_Model, m_Shader, m_Texture);*/
+
+	m_Shader = ResourceManager::GetInstance()->GetShader("Animation");
+	m_Model = ResourceManager::GetInstance()->GetModel("Texture");
+	m_Texture = ResourceManager::GetInstance()->GetTexture("poo_down.tga");
+
+	m_spriteAnim = std::make_shared<SpriteAnimation2D>(m_Model, m_Shader, m_Texture, 6, 0.1f);
 
 }
 
 void Application::Update(GLfloat deltaTime)
 {
 	//std::cout << "Application::Update" << std::endl;
+	m_spriteAnim->Update(deltaTime);
 }
 
 void Application::Draw()
 {
-	//std::cout << "Application::Draw" << std::endl;
-	/*m_Shader->Activate();
-	m_VAO->Bind();
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);*/
-
-	m_sprite2d->Draw();
+	//m_sprite2d->Draw();
+	m_spriteAnim->Draw();
 }
 
 void Application::HandleKeyEvent(int key, bool isPressed)

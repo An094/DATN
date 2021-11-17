@@ -8,22 +8,19 @@ class Texture;
 class Model;
 class Shader;
 class Sprite2D;
-
+class SpriteAnimation2D;
 class Application
 {
 private:
 	//Window* m_window;
 	static std::shared_ptr<Application> s_Instance;
 	
-	std::shared_ptr<VAO> m_VAO;
 	std::shared_ptr<Texture> m_Texture;
 	std::shared_ptr<Model> m_Model;
 	std::shared_ptr<Shader> m_Shader;
 
 	std::shared_ptr<Sprite2D> m_sprite2d;
-
-	bool m_isPressed;
-
+	std::shared_ptr<SpriteAnimation2D> m_spriteAnim;
 
 public:
 	static std::shared_ptr<Application> GetInstance()
@@ -34,6 +31,7 @@ public:
 	}
 	Application();
 	~Application();
+
 	void Init();
 	void Update(GLfloat deltaTime);
 	void Draw();

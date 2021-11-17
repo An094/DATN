@@ -20,6 +20,13 @@ private:
 public:
 	Sprite2D(std::shared_ptr<Model>, std::shared_ptr<Shader>, std::shared_ptr<Texture>);
 	~Sprite2D();
+	inline std::shared_ptr<Texture> GetTexture() { return m_Texture; }
+	inline std::shared_ptr<Model> GetModel() { return m_Model; }
+	inline std::shared_ptr<Shader> GetShader() { return m_Shader; }
+
+	inline glm::mat4 GetTransMatrix() { return m_TransMatrix; }
+	inline glm::mat4 GetRotateMatrix() { return m_RotateMatrix; }
+	inline glm::mat4 GetScaleMatrix() { return m_ScaleMatrix; }
 
 	void SetPosition(glm::vec2 pos);
 	inline glm::vec2 GetPosition() { return m_Position; }
