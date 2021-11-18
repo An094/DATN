@@ -7,10 +7,13 @@
 #include "Sprite2D.h"
 #include "SpriteAnimation2D.h"
 #include "ResourceManager.h"
+#include "Button.h"
+
 std::shared_ptr<Application> Application::s_Instance = nullptr;
 Application::Application()
 {
-
+	m_currentTime = 0.0f;
+	m_fpsCount = 0;
 }
 
 Application::~Application()
@@ -29,20 +32,38 @@ void Application::Init()
 
 	m_sprite2d = std::make_shared<Sprite2D>(m_Model, m_Shader, m_Texture);
 	m_sprite2d->SetPosition(400, 400);
-	m_sprite2d->SetSize(1600, 1600);
+	m_sprite2d->SetSize(800, 800);
+
+	m_button = std::make_shared<Button>(m_Model, m_Shader,
+		ResourceManager::GetInstance()->GetTexture("Load.tga"));
+	m_button->SetPosition(400, 600);
+	m_button->SetSize(400, 150);
+	m_button->SetOnClick([]()
+		{
+			std::cout << "Button is clicked" << std::endl;
+		});
 
 	m_Shader = ResourceManager::GetInstance()->GetShader("Animation");
-	m_Model = ResourceManager::GetInstance()->GetModel("Texture");
 	m_Texture = ResourceManager::GetInstance()->GetTexture("poo_down.tga");
 
 	m_spriteAnim = std::make_shared<SpriteAnimation2D>(m_Model, m_Shader, m_Texture, 6, 0.1f);
 	m_spriteAnim->SetPosition(400, 400);
-	m_spriteAnim->SetSize(800, 800);
+	m_spriteAnim->SetSize(100, 100);
 }
 
 void Application::Update(GLfloat deltaTime)
 {
-	//std::cout << "Application::Update" << std::endl;
+	if (m_currentTime < 1.0f)
+	{
+		m_currentTime += deltaTime;
+		m_fpsCount++;
+	}
+	else
+	{
+		m_currentTime = 1.0f - m_currentTime;
+		std::cout << "FPS: " << m_fpsCount << std::endl;
+		m_fpsCount = 0;
+	}
 	m_spriteAnim->Update(deltaTime);
 }
 
@@ -51,6 +72,7 @@ void Application::Draw()
 	//m_sprite2d->Draw();
 	m_sprite2d->Draw();
 	m_spriteAnim->Draw();
+	m_button->Draw();
 }
 
 void Application::HandleKeyEvent(int key, bool isPressed)
@@ -60,5 +82,5 @@ void Application::HandleKeyEvent(int key, bool isPressed)
 
 void Application::HandleTouchEvent(double xpos, double ypos, bool isPressed)
 {
-
+	m_button->HandleTouchEvent(xpos, ypos, isPressed);
 }

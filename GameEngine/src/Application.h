@@ -9,6 +9,8 @@ class Model;
 class Shader;
 class Sprite2D;
 class SpriteAnimation2D;
+class Button;
+
 class Application
 {
 private:
@@ -22,6 +24,10 @@ private:
 	std::shared_ptr<Sprite2D> m_sprite2d;
 	std::shared_ptr<SpriteAnimation2D> m_spriteAnim;
 
+	std::shared_ptr<Button> m_button;
+
+	float m_currentTime;
+	int m_fpsCount;
 public:
 	static std::shared_ptr<Application> GetInstance()
 	{

@@ -67,6 +67,7 @@ void Sprite2D::Draw()
 
 void Sprite2D::SetPosition(int xpos, int ypos)
 {
+	m_Position = glm::vec2(xpos, ypos);
 	glm::vec2 temp;
 	temp.x = (xpos - widthScreen * 0.5f) * 2.0f / widthScreen;
 	temp.y = (ypos - widthScreen * 0.5f) * 2.0f / widthScreen;
@@ -75,6 +76,8 @@ void Sprite2D::SetPosition(int xpos, int ypos)
 
 void Sprite2D::SetSize(int width, int height)
 {
+	m_Width = width;
+	m_Height = height;
 	glm::vec2 temp;
 	temp.x = width * 1.0f / widthScreen;
 	temp.y = height * 1.0f / heightScreen;

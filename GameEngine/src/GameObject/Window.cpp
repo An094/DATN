@@ -128,7 +128,7 @@ void Window::mouse_button_callback(GLFWwindow* window, int button, int action, i
 	Window* win = (Window*)glfwGetWindowUserPointer(window);
 	if (button == 0)
 	{
-		win->HandleTouchEvent(win->mx, win->my, action == GLFW_RELEASE ? true : false);
+		win->HandleTouchEvent(win->mx, win->my, action == GLFW_PRESS ? true : false);
 	}
 }
 
@@ -143,7 +143,7 @@ void Window::HandleTouchEvent(double xpos, double ypos, bool isPressed)
 {
 	if (!isPressed)
 	{
-		std::cout << "x: " << xpos << "y: " << ypos << std::endl;
+		//std::cout << "x: " << xpos << "y: " << ypos << std::endl;
 		Application::GetInstance()->HandleTouchEvent(xpos, ypos, isPressed);
 	}
 }

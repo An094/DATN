@@ -17,6 +17,7 @@ private:
 	glm::mat4 m_TransMatrix;
 	glm::mat4 m_RotateMatrix;
 	glm::mat4 m_ScaleMatrix;
+	int m_Width, m_Height;
 public:
 	Sprite2D(std::shared_ptr<Model>, std::shared_ptr<Shader>, std::shared_ptr<Texture>);
 	~Sprite2D();
@@ -28,11 +29,15 @@ public:
 	inline glm::mat4 GetRotateMatrix() { return m_RotateMatrix; }
 	inline glm::mat4 GetScaleMatrix() { return m_ScaleMatrix; }
 
+
 	void SetPosition(int xpos, int ypos);
 	inline glm::vec2 GetPosition() { return m_Position; }
 
 	void SetSize(int width, int height);
-
+	inline void GetSize(int& width, int& height) {
+		width = m_Width;
+		height = m_Height;
+	}
 	void Init();
 	void Draw();
 };

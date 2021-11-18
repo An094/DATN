@@ -171,6 +171,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\GameObject\Button.cpp" />
     <ClCompile Include="src\GameObject\SpriteAnimation2D.cpp" />
     <ClCompile Include="src\GameObject\Sprite2D.cpp" />
     <ClCompile Include="src\Common.cpp" />
@@ -189,6 +190,7 @@
     <ClCompile Include="src\utilities.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GameObject\Button.h" />
     <ClInclude Include="src\GameObject\SpriteAnimation2D.h" />
     <ClInclude Include="src\GameObject\Sprite2D.h" />
     <ClInclude Include="src\GameObject\Model.h" />
