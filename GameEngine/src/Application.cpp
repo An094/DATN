@@ -7,6 +7,8 @@
 #include "Sprite2D.h"
 #include "SpriteAnimation2D.h"
 #include "ResourceManager.h"
+#include "GameStateManager/GameStateMachine.h"
+#include "GameStateManager/GameStateBase.h"
 #include "Button.h"
 
 std::shared_ptr<Application> Application::s_Instance = nullptr;
@@ -28,22 +30,13 @@ void Application::Init()
 
 
 
-	m_sprite2d = std::make_shared<Sprite2D>("Texture", "Texture", "bg_play.tga");
-	m_sprite2d->SetPosition(400, 400);
-	m_sprite2d->SetSize(800, 800);
+	
 
-	m_button = std::make_shared<Button>("Texture", "Texture", "Load.tga");
-	m_button->SetPosition(400, 600);
-	m_button->SetSize(400, 150);
-	m_button->SetOnClick([]()
-		{
-			std::cout << "Button is clicked" << std::endl;
-		});
-
-
-	m_spriteAnim = std::make_shared<SpriteAnimation2D>("Texture", "Animation", "poo_down.tga", 6, 0.1f);
-	m_spriteAnim->SetPosition(400, 400);
-	m_spriteAnim->SetSize(100, 100);
+	if (!GameStateMachine::GetInstance()->HasState())
+	{
+		GameStateMachine::GetInstance()->ChangeState(0);//Push state 0
+	}	
+	GameStateMachine::GetInstance()->GetCurrentState()->Init();
 }
 
 void Application::Update(GLfloat deltaTime)
@@ -59,15 +52,12 @@ void Application::Update(GLfloat deltaTime)
 		std::cout << "FPS: " << m_fpsCount << std::endl;
 		m_fpsCount = 0;
 	}
-	m_spriteAnim->Update(deltaTime);
+	GameStateMachine::GetInstance()->GetCurrentState()->Update(deltaTime);
 }
 
 void Application::Draw()
 {
-	//m_sprite2d->Draw();
-	m_sprite2d->Draw();
-	m_spriteAnim->Draw();
-	m_button->Draw();
+	GameStateMachine::GetInstance()->GetCurrentState()->Draw();
 }
 
 void Application::HandleKeyEvent(int key, bool isPressed)
@@ -77,5 +67,5 @@ void Application::HandleKeyEvent(int key, bool isPressed)
 
 void Application::HandleTouchEvent(double xpos, double ypos, bool isPressed)
 {
-	m_button->HandleTouchEvent(xpos, ypos, isPressed);
+	GameStateMachine::GetInstance()->GetCurrentState()->HandleTouchEvents(xpos, ypos, isPressed);
 }
