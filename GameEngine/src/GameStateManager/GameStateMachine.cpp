@@ -25,6 +25,7 @@ GameStateMachine::~GameStateMachine()
 void GameStateMachine::AddState(std::shared_ptr<GameStateBase> state)
 {
 	m_ListState.push_back(state);
+	//m_StackState.push(state);
 }
 
 bool GameStateMachine::IsValidState(int index)
@@ -38,8 +39,12 @@ void GameStateMachine::ChangeState(int index)
 	{
 		return;
 	}
-
+	if (HasState())
+	{
+		m_CurrentState->Pause();
+	}
 	m_CurrentState = m_ListState[index];
+	m_CurrentState->Init();
 	m_StackState.push(m_CurrentState);
 }
 

@@ -1,4 +1,5 @@
 #include "GSIntro.h"
+#include "GameStateManager/GameStateMachine.h"
 #include "GameObject/Sprite2D.h"
 #include "GameObject/SpriteAnimation2D.h"
 #include "GameObject/Button.h"
@@ -23,7 +24,9 @@ void GSIntro::Init()
 	m_button->SetSize(400, 150);
 	m_button->SetOnClick([]()
 		{
-			std::cout << "Button is clicked" << std::endl;
+			//std::cout << "Button is clicked" << std::endl;
+			GameStateMachine::GetInstance()->ChangeState(1);
+			
 		});
 
 
@@ -52,6 +55,11 @@ void GSIntro::HandleKeyEvents(int key, bool bIsPressed)
 void GSIntro::HandleTouchEvents(int x, int y, bool bIsPressed)
 {
 	m_button->HandleTouchEvent(x, y, bIsPressed);
+}
+
+void GSIntro::Pause()
+{
+
 }
 
 void GSIntro::Exit()
