@@ -19,6 +19,16 @@ SpriteAnimation2D::SpriteAnimation2D(std::shared_ptr<Model> model, std::shared_p
 	m_CurrentTime = 0.0f;
 }
 
+SpriteAnimation2D::SpriteAnimation2D(const std::string& modelName, const std::string& shaderName, const std::string& textureName,
+	int numberFrame, float frameTime)
+	:Sprite2D(modelName, shaderName, textureName)
+{
+	m_NumberFrame = numberFrame;
+	m_FrameTime = frameTime;
+	m_CurrentFrame = 0;
+	m_CurrentTime = 0.0f;
+}
+
 SpriteAnimation2D::~SpriteAnimation2D()
 {
 

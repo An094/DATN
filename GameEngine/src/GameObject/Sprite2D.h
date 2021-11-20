@@ -20,6 +20,7 @@ private:
 	int m_Width, m_Height;
 public:
 	Sprite2D(std::shared_ptr<Model>, std::shared_ptr<Shader>, std::shared_ptr<Texture>);
+	Sprite2D(const std::string&, const std::string&, const std::string&);
 	~Sprite2D();
 	inline std::shared_ptr<Texture> GetTexture() { return m_Texture; }
 	inline std::shared_ptr<Model> GetModel() { return m_Model; }

@@ -19,6 +19,17 @@ Sprite2D::Sprite2D(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader,
 	m_ScaleMatrix = glm::mat4(1.0f);
 }
 
+Sprite2D::Sprite2D(const std::string& modelName, const std::string& shaderName, const std::string& textureName)
+{
+	m_Model = ResourceManager::GetInstance()->GetModel(modelName);
+	m_Shader = ResourceManager::GetInstance()->GetShader(shaderName);
+	m_Texture = ResourceManager::GetInstance()->GetTexture(textureName);
+	m_Position = glm::vec3(0.0f, 0.0f, 0.0f);
+	m_TransMatrix = glm::mat4(1.0f);
+	m_RotateMatrix = glm::mat4(1.0f);
+	m_ScaleMatrix = glm::mat4(1.0f);
+}
+
 Sprite2D::~Sprite2D()
 {
 

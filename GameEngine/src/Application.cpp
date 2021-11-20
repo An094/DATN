@@ -26,16 +26,13 @@ void Application::Init()
 	////Initialize data
 	ResourceManager::GetInstance()->Init();
 
-	m_Shader = ResourceManager::GetInstance()->GetShader("Texture");
-	m_Model = ResourceManager::GetInstance()->GetModel("Texture");
-	m_Texture = ResourceManager::GetInstance()->GetTexture("bg_play.tga");
 
-	m_sprite2d = std::make_shared<Sprite2D>(m_Model, m_Shader, m_Texture);
+
+	m_sprite2d = std::make_shared<Sprite2D>("Texture", "Texture", "bg_play.tga");
 	m_sprite2d->SetPosition(400, 400);
 	m_sprite2d->SetSize(800, 800);
 
-	m_button = std::make_shared<Button>(m_Model, m_Shader,
-		ResourceManager::GetInstance()->GetTexture("Load.tga"));
+	m_button = std::make_shared<Button>("Texture", "Texture", "Load.tga");
 	m_button->SetPosition(400, 600);
 	m_button->SetSize(400, 150);
 	m_button->SetOnClick([]()
@@ -43,10 +40,8 @@ void Application::Init()
 			std::cout << "Button is clicked" << std::endl;
 		});
 
-	m_Shader = ResourceManager::GetInstance()->GetShader("Animation");
-	m_Texture = ResourceManager::GetInstance()->GetTexture("poo_down.tga");
 
-	m_spriteAnim = std::make_shared<SpriteAnimation2D>(m_Model, m_Shader, m_Texture, 6, 0.1f);
+	m_spriteAnim = std::make_shared<SpriteAnimation2D>("Texture", "Animation", "poo_down.tga", 6, 0.1f);
 	m_spriteAnim->SetPosition(400, 400);
 	m_spriteAnim->SetSize(100, 100);
 }

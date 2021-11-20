@@ -9,6 +9,12 @@ Button::Button(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std
 
 }
 
+Button::Button(const std::string& modelName, const std::string& shaderName, const std::string& textureName)
+	: Sprite2D(modelName, shaderName, textureName)
+{
+
+}
+
 Button::~Button()
 {
 
