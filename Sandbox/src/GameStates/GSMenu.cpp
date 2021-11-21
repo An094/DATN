@@ -4,7 +4,7 @@
 
 void GSMenu::Init()
 {
-	m_buttonBack = std::make_shared<Button>("Texture", "Texture", "back_play.tga");
+	m_buttonBack = std::make_shared<Button>("Texture", "Texture", "back_play.tga", ButtonType::CIRCLE);
 	m_buttonBack->SetPosition(400, 400);
 	m_buttonBack->SetSize(200, 200);
 	m_buttonBack->SetOnClick([]()
