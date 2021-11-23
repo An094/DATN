@@ -3,6 +3,7 @@
 class Sprite2D;
 class SpriteAnimation2D;
 class Button;
+class Text;
 class GSIntro : public GameStateBase
 {
 public:
@@ -21,5 +22,7 @@ private:
 	std::shared_ptr<SpriteAnimation2D> m_spriteAnim;
 
 	std::shared_ptr<Button> m_button;
+
+	std::shared_ptr<Text> m_text;
 };
 

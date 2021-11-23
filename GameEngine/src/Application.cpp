@@ -10,6 +10,7 @@
 #include "GameStateManager/GameStateMachine.h"
 #include "GameStateManager/GameStateBase.h"
 #include "Button.h"
+#include "Text.h"
 
 std::shared_ptr<Application> Application::s_Instance = nullptr;
 Application::Application()

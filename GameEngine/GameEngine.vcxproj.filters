@@ -72,6 +72,9 @@
     <ClCompile Include="src\GameStateManager\GameStateMachine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\GameObject\Text.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject\Camera.h">
@@ -125,6 +128,9 @@
     <ClInclude Include="src\GameStateManager\GameStateMachine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\GameObject\Text.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\Shaders\Texture.fs" />
@@ -134,6 +140,8 @@
     </None>
     <None Include="Data\Shaders\Animation.fs" />
     <None Include="Data\Shaders\Animation.vs" />
+    <None Include="Data\Shaders\Text.vs" />
+    <None Include="Data\Shaders\Text.fs" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Data\Models\Texture.txt" />

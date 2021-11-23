@@ -92,7 +92,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>ENGINE;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)GameEngine\src\GameManager;$(SolutionDir)GameEngine\src\GameObject;$(SolutionDir)GameEngine\src;$(SolutionDir)GameEngine\include;$(SolutionDir)GameEngine\include\GLFW\include;$(SolutionDir)GameEngine\include\GLAD\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GameEngine\include\freetype;$(SolutionDir)GameEngine\src\GameManager;$(SolutionDir)GameEngine\src\GameObject;$(SolutionDir)GameEngine\src;$(SolutionDir)GameEngine\include;$(SolutionDir)GameEngine\include\GLFW\include;$(SolutionDir)GameEngine\include\GLAD\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -101,8 +101,8 @@
       <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)GameEngine\lib\lib-vc2019;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)GameEngine\lib\freetype;$(SolutionDir)GameEngine\lib\lib-vc2019;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>freetype.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -134,7 +134,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>ENGINE;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)GameEngine\src\GameManager;$(SolutionDir)GameEngine\src\GameObject;$(SolutionDir)GameEngine\src;$(SolutionDir)GameEngine\include;$(SolutionDir)GameEngine\include\GLFW\include;$(SolutionDir)GameEngine\include\GLAD\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GameEngine\include\freetype;$(SolutionDir)GameEngine\src\GameManager;$(SolutionDir)GameEngine\src\GameObject;$(SolutionDir)GameEngine\src;$(SolutionDir)GameEngine\include;$(SolutionDir)GameEngine\include\GLFW\include;$(SolutionDir)GameEngine\include\GLAD\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -143,8 +143,8 @@
       <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)GameEngine\lib\lib-vc2019;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)GameEngine\lib\freetype;$(SolutionDir)GameEngine\lib\lib-vc2019;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>freetype.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -190,6 +190,7 @@
     <ClCompile Include="src\GameObject\Window.cpp" />
     <ClCompile Include="src\utilities.h" />
     <ClCompile Include="src\GameStateManager\GameStateBase.cpp" />
+    <ClCompile Include="src\GameObject\Text.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameStateManager\GameStateMachine.h" />
@@ -209,11 +210,14 @@
     <ClInclude Include="src\GameObject\VBO.h" />
     <ClInclude Include="src\GameObject\Window.h" />
     <ClInclude Include="src\GameStateManager\GameStateBase.h" />
+    <ClInclude Include="src\GameObject\Text.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\Data.inl" />
     <None Include="Data\Shaders\Animation.fs" />
     <None Include="Data\Shaders\Animation.vs" />
+    <None Include="Data\Shaders\Text.fs" />
+    <None Include="Data\Shaders\Text.vs" />
     <None Include="Data\Shaders\Texture.fs" />
     <None Include="Data\Shaders\Texture.vs" />
   </ItemGroup>

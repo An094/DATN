@@ -3,6 +3,8 @@
 #include "GameObject/Sprite2D.h"
 #include "GameObject/SpriteAnimation2D.h"
 #include "GameObject/Button.h"
+#include "GameObject/Text.h"
+
 GSIntro::GSIntro()
 {
 
@@ -33,6 +35,9 @@ void GSIntro::Init()
 	m_spriteAnim = std::make_shared<SpriteAnimation2D>("Texture", "Animation", "poo_down.tga", 6, 0.1f);
 	m_spriteAnim->SetPosition(400, 400);
 	m_spriteAnim->SetSize(200, 200);
+
+	m_text = std::make_shared<Text>("arial.ttf", "Hello", 100, glm::vec3(1.0f, 0.0f, 1.0f));
+	m_text->SetPosition(300, 200);
 }
 
 void GSIntro::Update(float deltaTime)
@@ -45,6 +50,7 @@ void GSIntro::Draw()
 	m_sprite2d->Draw();
 	m_spriteAnim->Draw();
 	m_button->Draw();
+	m_text->Draw();
 }
 
 void GSIntro::HandleKeyEvents(int key, bool bIsPressed)

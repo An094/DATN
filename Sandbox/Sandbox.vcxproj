@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)GameEngine\include;$(SolutionDir)GameEngine\include\GLFW\include;$(SolutionDir)GameEngine\include\GLAD\include;$(SolutionDir)GameEngine\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GameEngine\include\freetype;$(SolutionDir)GameEngine\include;$(SolutionDir)GameEngine\include\GLFW\include;$(SolutionDir)GameEngine\include\GLAD\include;$(SolutionDir)GameEngine\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -122,7 +122,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)GameEngine\include;$(SolutionDir)GameEngine\include\GLFW\include;$(SolutionDir)GameEngine\include\GLAD\include;$(SolutionDir)GameEngine\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GameEngine\include\freetype;$(SolutionDir)GameEngine\include;$(SolutionDir)GameEngine\include\GLFW\include;$(SolutionDir)GameEngine\include\GLAD\include;$(SolutionDir)GameEngine\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

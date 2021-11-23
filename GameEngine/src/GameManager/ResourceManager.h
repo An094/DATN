@@ -6,7 +6,6 @@
 #include "GameObject/shaderClass.h"
 #include "GameObject/Model.h"
 
-
 class ResourceManager
 {
 public:
