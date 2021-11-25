@@ -5,6 +5,9 @@ Debug/
 GameEngine/bin/
 GameEngine/x64/
 Sandbox/x64/
+bin/
+bin-int/
 
 #Files
-*.user
+*.vcxproj*
+*.sln
