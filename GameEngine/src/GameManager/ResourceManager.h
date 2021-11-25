@@ -5,7 +5,8 @@
 #include "GameObject/Texture.h"
 #include "GameObject/shaderClass.h"
 #include "GameObject/Model.h"
-
+#include "soloud.h"
+#include "soloud_wav.h"
 class ResourceManager
 {
 public:
@@ -16,6 +17,11 @@ public:
 	void AddShader(const std::string& name);
 	void AddTexture(const std::string& name);
 	void AddModel(const std::string& name);
+
+	//Sound
+	void AddSound(const std::string& name);
+	void PlaySound(const std::string& name, bool loop = false);
+	void PauseSound(const std::string& name);
 
 	std::shared_ptr<Shader> GetShader(const std::string& name);
 	std::shared_ptr<Texture> GetTexture(const std::string& name);
@@ -29,6 +35,10 @@ private:
 	std::map<std::string, std::shared_ptr<Shader>> m_MapShader;
 	std::map<std::string, std::shared_ptr<Texture>> m_MapTexture;
 	std::map<std::string, std::shared_ptr<Model>> m_MapModel;
+	std::map<std::string, std::shared_ptr<SoLoud::Wav>> m_MapWave;//Add mapSound;
+	std::string m_SoundsPath;//Add soundsPath
+
+	SoLoud::Soloud m_Soloud; //Engine core
 
 	static std::shared_ptr<ResourceManager> s_Instance;
 };

@@ -4,7 +4,7 @@
 #include "GameObject/SpriteAnimation2D.h"
 #include "GameObject/Button.h"
 #include "GameObject/Text.h"
-
+#include "GameManager/ResourceManager.h"
 GSIntro::GSIntro()
 {
 
@@ -38,6 +38,7 @@ void GSIntro::Init()
 
 	m_text = std::make_shared<Text>("arial.ttf", "Hello", 100, glm::vec3(1.0f, 0.0f, 1.0f));
 	m_text->SetPosition(300, 200);
+	ResourceManager::GetInstance()->PlaySound("music_game.wav");
 }
 
 void GSIntro::Update(float deltaTime)
