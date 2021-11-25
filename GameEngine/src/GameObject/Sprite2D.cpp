@@ -1,5 +1,5 @@
 #include "Sprite2D.h"
-#include "ResourceManager.h"
+#include "GameManager/ResourceManager.h"
 #include "VAO.h"
 #include "VBO.h"
 #include "EBO.h"

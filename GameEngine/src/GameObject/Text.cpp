@@ -1,7 +1,7 @@
 #include "Text.h"
 
 
-#include "ResourceManager.h"
+#include "GameManager/ResourceManager.h"
 
 extern GLint widthScreen;
 extern GLint heightScreen;
