@@ -34,7 +34,7 @@ project "GameEngine"
 		"%{prj.name}/include/GLAD/include",
 		"%{prj.name}/include/freetype",
 		"%{prj.name}/include/Soloud",
-
+		"%{prj.name}/include/spdlog/include",
 	}
 
 	libdirs
@@ -90,6 +90,7 @@ project "Sandbox"
 		"GameEngine/include/GLAD/include",
 		"GameEngine/include/freetype",
 		"GameEngine/include/Soloud",
+		"GameEngine/include/spdlog/include",
 	}
 
 	links

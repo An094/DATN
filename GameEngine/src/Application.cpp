@@ -11,7 +11,7 @@
 #include "GameStateManager/GameStateBase.h"
 #include "GameObject/Button.h"
 #include "GameObject/Text.h"
-
+#include "Utils/Log.h"
 std::shared_ptr<Application> Application::s_Instance = nullptr;
 Application::Application()
 {
@@ -29,15 +29,18 @@ void Application::Init()
 	////Initialize data
 	ResourceManager::GetInstance()->Init();
 
-
-
-	
+	Log::Init();
 
 	if (!GameStateMachine::GetInstance()->HasState())
 	{
 		GameStateMachine::GetInstance()->ChangeState(0);//Push state 0
 	}	
 	GameStateMachine::GetInstance()->GetCurrentState()->Init();
+
+	ENGINE_INFO("OpenGL information");
+	ENGINE_INFO("Vendor: {0}", glGetString(GL_VENDOR));
+	ENGINE_INFO("Renderer: {0}", glGetString(GL_RENDERER));
+	ENGINE_INFO("Version: {0}", glGetString(GL_VERSION));
 }
 
 void Application::Update(GLfloat deltaTime)
@@ -50,7 +53,7 @@ void Application::Update(GLfloat deltaTime)
 	else
 	{
 		m_currentTime = 1.0f - m_currentTime;
-		std::cout << "FPS: " << m_fpsCount << std::endl;
+		ENGINE_TRACE("FPS: {}", m_fpsCount);
 		m_fpsCount = 0;
 	}
 	GameStateMachine::GetInstance()->GetCurrentState()->Update(deltaTime);

@@ -1,9 +1,8 @@
-#include"GameObject/Window.h" // first
+#include "GameEngine.h"
 #include "Config.h"
-#include "GameStateManager/GameStateMachine.h"
 #include "GameStates/GSIntro.h"
 #include "GameStates/GSMenu.h"
-//class GSIntro;
+
 void Init(Window*& window)
 {
 	GameStateMachine::GetInstance()->AddState(std::make_shared<GSIntro>());
@@ -17,6 +16,7 @@ int main()
 {
 	Window* window = NULL;
 	Init(window);
+	CLIENT_INFO("Screen width: {0}, Screen height: {1}", widthScreen, heightScreen);
 	window->Run();
 	return 0;
 }
