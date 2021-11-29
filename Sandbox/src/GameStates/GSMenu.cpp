@@ -10,8 +10,8 @@ void GSMenu::Init()
 	m_buttonBack->SetOnClick([]()
 		{
 			GameStateMachine::GetInstance()->PopState();
-			ResourceManager::GetInstance()->PauseSound("music_game.wav");
-			ResourceManager::GetInstance()->PlaySound("coin.mp3");
+			ResourceManager::GetInstance()->SetVolume(AUDIO_TYPE::MUSIC, 0.1f);
+			ResourceManager::GetInstance()->PlaySound(AUDIO_TYPE::SOUND, "coin.mp3");
 		});
 }
 

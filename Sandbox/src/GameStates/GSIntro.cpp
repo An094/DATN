@@ -26,7 +26,6 @@ void GSIntro::Init()
 	m_button->SetSize(400, 150);
 	m_button->SetOnClick([]()
 		{
-			//std::cout << "Button is clicked" << std::endl;
 			GameStateMachine::GetInstance()->ChangeState(1);
 			
 		});
@@ -38,7 +37,7 @@ void GSIntro::Init()
 
 	m_text = std::make_shared<Text>("arial.ttf", "Hello", 100, glm::vec3(1.0f, 0.0f, 1.0f));
 	m_text->SetPosition(300, 200);
-	ResourceManager::GetInstance()->PlaySound("music_game.wav");
+	ResourceManager::GetInstance()->PlaySound(AUDIO_TYPE::MUSIC, "music_game.wav");
 }
 
 void GSIntro::Update(float deltaTime)

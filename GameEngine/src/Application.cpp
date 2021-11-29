@@ -66,7 +66,7 @@ void Application::Draw()
 
 void Application::HandleKeyEvent(int key, bool isPressed)
 {
-	//std::cout << "Key: " << key << " isPressed: " << isPressed << std::endl;
+	
 }
 
 void Application::HandleTouchEvent(double xpos, double ypos, bool isPressed)

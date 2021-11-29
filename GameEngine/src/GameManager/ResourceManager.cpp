@@ -17,8 +17,6 @@ ResourceManager::ResourceManager()
 	m_TexturePath = m_DataPath + "Textures/";
 	m_ModelPath = m_DataPath + "Models/";
 	m_SoundsPath = m_DataPath + "Sounds/";
-	m_Soloud = SoLoud::Soloud();
-	m_Soloud.init();
 }
 
 ResourceManager::~ResourceManager()
@@ -49,6 +47,8 @@ void ResourceManager::Init()
 		strtmp = strtmp.substr(0, strtmp.size() - 1);
 		AddShader(strtmp);
 	}
+	m_Soloud = SoLoud::Soloud();
+	m_Soloud.init();
 }
 
 void ResourceManager::AddShader(const std::string& name)
@@ -141,20 +141,7 @@ std::shared_ptr<Texture> ResourceManager::GetTexture(const std::string& name)
 	return texture;
 }
 
-void ResourceManager::AddSound(const std::string& name)
-{
-	auto it = m_MapWave.find(name);
-	if (it != m_MapWave.end())
-	{
-		return;
-	}
-	std::shared_ptr<SoLoud::Wav> wave;
-	std::string wav = m_SoundsPath + name;
-	wave = std::make_shared<SoLoud::Wav>();
-	wave->load(wav.c_str());
-	m_MapWave.insert(std::pair<std::string, std::shared_ptr<SoLoud::Wav>>(name, wave));
-}
-void ResourceManager::PlaySound(const std::string& name, bool loop)
+void ResourceManager::PlaySound(AUDIO_TYPE type, const std::string& name, bool loop)
 {
 	std::shared_ptr<SoLoud::Wav> wave;
 	auto it = m_MapWave.find(name);
@@ -169,8 +156,18 @@ void ResourceManager::PlaySound(const std::string& name, bool loop)
 		wave->load(wav.c_str());
 		m_MapWave.insert(std::pair<std::string, std::shared_ptr<SoLoud::Wav>>(name, wave));
 	}
-	m_Soloud.play(*wave);
+	auto h = m_Soloud.play(*wave);
+	if (type == AUDIO_TYPE::SOUND)
+	{
+		m_ListHandleSound.push_back(h);
+	}
+	else
+	{
+		m_ListHandleMusic.push_back(h);
+	}
+	m_Soloud.setLooping(h, loop);
 }
+
 void ResourceManager::PauseSound(const std::string& name)
 {
 	std::shared_ptr<SoLoud::Wav> wave;
@@ -180,5 +177,23 @@ void ResourceManager::PauseSound(const std::string& name)
 		wave = it->second;
 	}
 	m_Soloud.stopAudioSource(*wave);
+}
+
+void ResourceManager::SetVolume(AUDIO_TYPE type,float volume)
+{
+	if (type == AUDIO_TYPE::MUSIC)
+	{
+		for (auto it : m_ListHandleMusic)
+		{
+			m_Soloud.setVolume(it, volume);
+		}
+	}
+	else
+	{
+		for (auto it : m_ListHandleSound)
+		{
+			m_Soloud.setVolume(it, volume);
+		}
+	}
 }
 
