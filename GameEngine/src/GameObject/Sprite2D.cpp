@@ -42,10 +42,6 @@ void Sprite2D::Init()
 
 void Sprite2D::Draw()
 {
-	//[IMPORTANT] Create VAO before Initialize data 
-	// Generates Vertex Array Object and binds it
-	//m_Shader->Activate();
-
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	std::shared_ptr<VAO> vao = m_Model->getVAO();
@@ -81,7 +77,7 @@ void Sprite2D::SetPosition(int xpos, int ypos)
 	m_Position = glm::vec2(xpos, ypos);
 	glm::vec2 temp;
 	temp.x = (xpos - widthScreen * 0.5f) * 2.0f / widthScreen;
-	temp.y = (ypos - widthScreen * 0.5f) * 2.0f / widthScreen;
+	temp.y = (ypos - heightScreen * 0.5f) * 2.0f / heightScreen;
 	m_TransMatrix = glm::translate(m_TransMatrix, glm::vec3(temp.x, temp.y, 0.0f));
 }
 

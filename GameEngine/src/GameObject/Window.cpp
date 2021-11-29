@@ -56,7 +56,7 @@ void Window::Init()
 
 
 	// Specify the color of the background
-	glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	// Clean the back buffer and assign the new color to it
 	glClear(GL_COLOR_BUFFER_BIT);
 	// Swap the back buffer with the front buffer
@@ -80,7 +80,7 @@ void Window::Draw()
 
 void Window::Clear()
 {
-	glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	// Clean the back buffer and assign the new color to it
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }

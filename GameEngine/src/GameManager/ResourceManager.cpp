@@ -12,7 +12,7 @@ std::shared_ptr<ResourceManager> ResourceManager::GetInstance()
 
 ResourceManager::ResourceManager()
 {
-	m_DataPath = "../GameEngine/Data/";
+	m_DataPath = "../Data/";
 	m_ShaderPath = m_DataPath + "Shaders/";
 	m_TexturePath = m_DataPath + "Textures/";
 	m_ModelPath = m_DataPath + "Models/";

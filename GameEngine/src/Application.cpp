@@ -26,21 +26,18 @@ Application::~Application()
 
 void Application::Init()
 {
+	Log::Init();
+	ENGINE_INFO("OpenGL information");
+	ENGINE_INFO("Vendor: {0}", glGetString(GL_VENDOR));
+	ENGINE_INFO("Renderer: {0}", glGetString(GL_RENDERER));
+	ENGINE_INFO("Version: {0}", glGetString(GL_VERSION));
 	////Initialize data
 	ResourceManager::GetInstance()->Init();
-
-	Log::Init();
 
 	if (!GameStateMachine::GetInstance()->HasState())
 	{
 		GameStateMachine::GetInstance()->ChangeState(0);//Push state 0
 	}	
-	GameStateMachine::GetInstance()->GetCurrentState()->Init();
-
-	ENGINE_INFO("OpenGL information");
-	ENGINE_INFO("Vendor: {0}", glGetString(GL_VENDOR));
-	ENGINE_INFO("Renderer: {0}", glGetString(GL_RENDERER));
-	ENGINE_INFO("Version: {0}", glGetString(GL_VERSION));
 }
 
 void Application::Update(GLfloat deltaTime)
@@ -66,7 +63,7 @@ void Application::Draw()
 
 void Application::HandleKeyEvent(int key, bool isPressed)
 {
-	
+	GameStateMachine::GetInstance()->GetCurrentState()->HandleKeyEvents(key, isPressed);
 }
 
 void Application::HandleTouchEvent(double xpos, double ypos, bool isPressed)

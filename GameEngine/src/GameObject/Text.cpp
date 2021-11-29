@@ -27,7 +27,7 @@ Text::Text(const std::string& fontFile, const std::string& content, int size, gl
 	}
 
 	// find path to font
-	std::string font_name = "../GameEngine/Data/Fonts/" + fontFile;
+	std::string font_name = "../Data/Fonts/" + fontFile;
 	if (font_name.empty())
 	{
 		std::cout << "ERROR::FREETYPE: Failed to load font_name" << std::endl;
