@@ -13,11 +13,13 @@ private:
 	std::shared_ptr<Model> m_Model;
 	std::shared_ptr<Shader> m_Shader;
 	std::shared_ptr<Texture> m_Texture;
+	
 	glm::vec2 m_Position;
 	glm::mat4 m_TransMatrix;
 	glm::mat4 m_RotateMatrix;
 	glm::mat4 m_ScaleMatrix;
 	int m_Width, m_Height;
+	const glm::mat4 identifyMatrix = glm::mat4(1.0f);
 public:
 	Sprite2D(std::shared_ptr<Model>, std::shared_ptr<Shader>, std::shared_ptr<Texture>);
 	Sprite2D(const std::string&, const std::string&, const std::string&);
@@ -31,7 +33,7 @@ public:
 	inline glm::mat4 GetScaleMatrix() { return m_ScaleMatrix; }
 
 
-	void SetPosition(int xpos, int ypos);
+	void SetPosition(float xpos, float ypos);
 	inline glm::vec2 GetPosition() { return m_Position; }
 
 	void SetSize(int width, int height);

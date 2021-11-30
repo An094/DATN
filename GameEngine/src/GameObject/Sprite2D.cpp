@@ -14,9 +14,9 @@ Sprite2D::Sprite2D(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader,
 	:m_Model(model), m_Shader(shader), m_Texture(texture)
 {
 	m_Position = glm::vec3(0.0f, 0.0f, 0.0f);
-	m_TransMatrix = glm::mat4(1.0f);
-	m_RotateMatrix = glm::mat4(1.0f);
-	m_ScaleMatrix = glm::mat4(1.0f);
+	m_TransMatrix = identifyMatrix;
+	m_RotateMatrix = identifyMatrix;
+	m_ScaleMatrix = identifyMatrix;
 }
 
 Sprite2D::Sprite2D(const std::string& modelName, const std::string& shaderName, const std::string& textureName)
@@ -25,9 +25,9 @@ Sprite2D::Sprite2D(const std::string& modelName, const std::string& shaderName, 
 	m_Shader = ResourceManager::GetInstance()->GetShader(shaderName);
 	m_Texture = ResourceManager::GetInstance()->GetTexture(textureName);
 	m_Position = glm::vec3(0.0f, 0.0f, 0.0f);
-	m_TransMatrix = glm::mat4(1.0f);
-	m_RotateMatrix = glm::mat4(1.0f);
-	m_ScaleMatrix = glm::mat4(1.0f);
+	m_TransMatrix = identifyMatrix;
+	m_RotateMatrix = identifyMatrix;
+	m_ScaleMatrix = identifyMatrix;
 }
 
 Sprite2D::~Sprite2D()
@@ -72,13 +72,13 @@ void Sprite2D::Draw()
 	ebo->Unbind();
 }
 
-void Sprite2D::SetPosition(int xpos, int ypos)
+void Sprite2D::SetPosition(float xpos, float ypos)
 {
 	m_Position = glm::vec2(xpos, ypos);
 	glm::vec2 temp;
 	temp.x = (xpos - widthScreen * 0.5f) * 2.0f / widthScreen;
 	temp.y = (ypos - heightScreen * 0.5f) * 2.0f / heightScreen;
-	m_TransMatrix = glm::translate(m_TransMatrix, glm::vec3(temp.x, temp.y, 0.0f));
+	m_TransMatrix = glm::translate(identifyMatrix, glm::vec3(temp.x, temp.y, 0.0f));
 }
 
 void Sprite2D::SetSize(int width, int height)
@@ -88,5 +88,5 @@ void Sprite2D::SetSize(int width, int height)
 	glm::vec2 temp;
 	temp.x = width * 1.0f / widthScreen;
 	temp.y = height * 1.0f / heightScreen;
-	m_ScaleMatrix = glm::scale(m_ScaleMatrix, glm::vec3(temp.x, temp.y, 0.0f));
+	m_ScaleMatrix = glm::scale(identifyMatrix, glm::vec3(temp.x, temp.y, 0.0f));
 }

@@ -27,14 +27,13 @@ void Button::HandleTouchEvent(double xpos, double ypos, bool isPressed)
 	bool condition;
 	if (m_Type == ButtonType::RECTANGLE)
 	{
-		//Origin Coordinate of OpenGL is in Top Left corner but in the Engine it is Bottom Left corner
 		bool firstCondition = xpos >= GetPosition().x - width * 0.5f && xpos <= GetPosition().x + width * 0.5f;
-		bool secondCondition = ypos >= (heightScreen - GetPosition().y) - height * 0.5f && ypos <= (heightScreen - GetPosition().y) + height * 0.5f;
+		bool secondCondition = ypos >= GetPosition().y - height * 0.5f && ypos <= GetPosition().y + height * 0.5f;
 		condition = firstCondition && secondCondition;
 	}
 	else
 	{
-		condition = pow(GetPosition().x - xpos, 2) + pow(heightScreen - GetPosition().y - ypos, 2) <= pow(width * 0.5, 2);
+		condition = pow(GetPosition().x - xpos, 2) + pow(GetPosition().y - ypos, 2) <= pow(width * 0.5, 2);
 	}
 	if (condition && !isPressed)
 	{

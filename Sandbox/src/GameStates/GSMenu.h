@@ -21,5 +21,8 @@ private:
 	std::shared_ptr<Button> m_PlayButton;
 	std::shared_ptr<Button> m_SettingButton;
 	std::shared_ptr<Button> m_QuitButton;
+
+	bool logoGoDown;
+	float speedLogo;
 };
 

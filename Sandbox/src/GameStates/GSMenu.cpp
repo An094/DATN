@@ -7,6 +7,9 @@
 
 extern GLint widthScreen;
 extern GLint heightScreen;
+extern GLint hightestLogo;
+extern GLint lowestLogo;
+
 void GSMenu::Init()
 {
 	//backgroud
@@ -18,10 +21,12 @@ void GSMenu::Init()
 	m_Logo = std::make_shared<Sprite2D>("Texture", "Texture", "LogoGame.tga");
 	m_Logo->SetPosition(widthScreen / 2, heightScreen * 3 / 4);
 	m_Logo->SetSize(400, 200);
+	logoGoDown = true;
+	speedLogo = 50.0f;
 
 	//button play
 	m_PlayButton = std::make_shared<Button>("Texture", "Texture", "Menu/button_play.tga");
-	m_PlayButton->SetPosition(widthScreen / 2, heightScreen / 2);
+	m_PlayButton->SetPosition(widthScreen / 2, heightScreen / 2 - 50);
 	m_PlayButton->SetSize(300, 150);
 	m_PlayButton->SetOnClick([]()
 		{
@@ -47,7 +52,20 @@ void GSMenu::Init()
 
 void GSMenu::Update(float deltaTime)
 {
-
+	float ypos = m_Logo->GetPosition().y;
+	float xpos = m_Logo->GetPosition().x;
+	if (logoGoDown && ypos > lowestLogo)
+	{
+		m_Logo->SetPosition(xpos, ypos - speedLogo * deltaTime);
+	}
+	else if(!logoGoDown && ypos < hightestLogo)
+	{
+		m_Logo->SetPosition(xpos, ypos + speedLogo * deltaTime);
+	}
+	else
+	{
+		logoGoDown = !logoGoDown;
+	}
 }
 
 void GSMenu::Draw()

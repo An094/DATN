@@ -1,5 +1,9 @@
 #include "Window.h"
 #include "Application.h"
+
+extern GLint widthScreen;
+extern GLint heightScreen;
+
 void window_resize(GLFWwindow* window, int width, int height);
 Window::Window(GLint width, GLint height, std::string name)
 	: m_width(width), m_height(height), m_name(name)
@@ -120,7 +124,7 @@ void Window::key_callback(GLFWwindow* window, int key, int scancode, int action,
 
 void Window::HandleKeyEvent(int key, bool isPressed)
 {
-		Application::GetInstance()->HandleKeyEvent(key, isPressed);
+	Application::GetInstance()->HandleKeyEvent(key, isPressed);
 }
 
 void Window::mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
@@ -143,8 +147,8 @@ void Window::HandleTouchEvent(double xpos, double ypos, bool isPressed)
 {
 	if (!isPressed)
 	{
-		//std::cout << "x: " << xpos << "y: " << ypos << std::endl;
-		Application::GetInstance()->HandleTouchEvent(xpos, ypos, isPressed);
+		//Origin of OpenGL is Top Left corner
+		Application::GetInstance()->HandleTouchEvent(xpos, heightScreen - ypos, isPressed);
 	}
 }
 
