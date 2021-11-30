@@ -41,10 +41,6 @@ void SpriteAnimation2D::Init()
 
 void SpriteAnimation2D::Draw()
 {
-	//[IMPORTANT] Create VAO before Initialize data 
-	// Generates Vertex Array Object and binds it
-	//m_Shader->Activate();
-
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	std::shared_ptr<VAO> vao = GetModel()->getVAO();

@@ -34,7 +34,7 @@ void Button::HandleTouchEvent(double xpos, double ypos, bool isPressed)
 	}
 	else
 	{
-		condition = pow(GetPosition().x - xpos, 2) + pow(GetPosition().y - ypos, 2) <= pow(width * 0.5, 2);
+		condition = pow(GetPosition().x - xpos, 2) + pow(heightScreen - GetPosition().y - ypos, 2) <= pow(width * 0.5, 2);
 	}
 	if (condition && !isPressed)
 	{
