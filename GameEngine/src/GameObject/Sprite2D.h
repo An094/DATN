@@ -10,6 +10,8 @@ class Texture;
 class Sprite2D
 {
 private:
+	const glm::mat4 identifyMatrix = glm::mat4(1.0f);
+
 	std::shared_ptr<Model> m_Model;
 	std::shared_ptr<Shader> m_Shader;
 	std::shared_ptr<Texture> m_Texture;
@@ -19,11 +21,11 @@ private:
 	glm::mat4 m_RotateMatrix;
 	glm::mat4 m_ScaleMatrix;
 	int m_Width, m_Height;
-	const glm::mat4 identifyMatrix = glm::mat4(1.0f);
 public:
-	Sprite2D(std::shared_ptr<Model>, std::shared_ptr<Shader>, std::shared_ptr<Texture>);
-	Sprite2D(const std::string&, const std::string&, const std::string&);
+	//Default model and texture of Sprite2D is Texture
+	Sprite2D(const std::string& ,const std::string& model = "Texture", const std::string& shader = "Texture");
 	~Sprite2D();
+	//Getter
 	inline std::shared_ptr<Texture> GetTexture() { return m_Texture; }
 	inline std::shared_ptr<Model> GetModel() { return m_Model; }
 	inline std::shared_ptr<Shader> GetShader() { return m_Shader; }
@@ -32,15 +34,18 @@ public:
 	inline glm::mat4 GetRotateMatrix() { return m_RotateMatrix; }
 	inline glm::mat4 GetScaleMatrix() { return m_ScaleMatrix; }
 
-
-	void SetPosition(float xpos, float ypos);
 	inline glm::vec2 GetPosition() { return m_Position; }
-
-	void SetSize(int width, int height);
 	inline void GetSize(int& width, int& height) {
 		width = m_Width;
 		height = m_Height;
 	}
+
+	//Setter
+	void SetPosition(float xpos, float ypos);
+	void SetPosition(glm::vec2);
+
+	void SetSize(int width, int height);
+
 	void Init();
 	void Draw();
 };

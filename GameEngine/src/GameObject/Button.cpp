@@ -1,16 +1,8 @@
 #include "Button.h"
 #include <glad/glad.h>
 
-extern GLint heightScreen;
-
-Button::Button(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture, ButtonType type)
-	: Sprite2D(model, shader, texture)
-{
-	m_Type = type;
-}
-
-Button::Button(const std::string& modelName, const std::string& shaderName, const std::string& textureName, ButtonType type)
-	: Sprite2D(modelName, shaderName, textureName)
+Button::Button(const std::string& textureName, const std::string& modelName, const std::string& shaderName, ButtonType type)
+	: Sprite2D(textureName, modelName, shaderName)
 {
 	m_Type = type;
 }

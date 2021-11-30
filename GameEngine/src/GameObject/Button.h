@@ -11,8 +11,7 @@ enum ButtonType
 class Button : public Sprite2D
 {
 public:
-	Button(std::shared_ptr<Model>, std::shared_ptr<Shader>, std::shared_ptr<Texture>, ButtonType type = ButtonType::RECTANGLE);
-	Button(const std::string&, const std::string&, const std::string&, ButtonType type = ButtonType::RECTANGLE);
+	Button(const std::string&, const std::string& model = "Texture", const std::string& shader = "Texture", ButtonType type = ButtonType::RECTANGLE);
 	~Button();
 	void SetOnClick(void (*)());
 	void HandleTouchEvent(double xpos, double ypos, bool isPressed);

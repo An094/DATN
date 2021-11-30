@@ -13,19 +13,19 @@ extern GLint lowestLogo;
 void GSMenu::Init()
 {
 	//backgroud
-	m_Background = std::make_shared<Sprite2D>("Texture", "Texture", "background.tga");
+	m_Background = std::make_shared<Sprite2D>("background.tga");
 	m_Background->SetPosition(widthScreen / 2, heightScreen / 2);
 	m_Background->SetSize(widthScreen, heightScreen);
 
 	//logo
-	m_Logo = std::make_shared<Sprite2D>("Texture", "Texture", "LogoGame.tga");
+	m_Logo = std::make_shared<Sprite2D>("LogoGame.tga");
 	m_Logo->SetPosition(widthScreen / 2, heightScreen * 3 / 4);
 	m_Logo->SetSize(400, 200);
 	logoGoDown = true;
 	speedLogo = 50.0f;
 
 	//button play
-	m_PlayButton = std::make_shared<Button>("Texture", "Texture", "Menu/button_play.tga");
+	m_PlayButton = std::make_shared<Button>("Menu/button_play.tga");
 	m_PlayButton->SetPosition(widthScreen / 2, heightScreen / 2 - 50);
 	m_PlayButton->SetSize(300, 150);
 	m_PlayButton->SetOnClick([]()
@@ -34,7 +34,7 @@ void GSMenu::Init()
 		});
 
 	//button setting
-	m_SettingButton = std::make_shared<Button>("Texture", "Texture", "Menu/button_setting.tga", ButtonType::CIRCLE);
+	m_SettingButton = std::make_shared<Button>("Menu/button_setting.tga", "Texture", "Texture", ButtonType::CIRCLE);
 	m_SettingButton->SetPosition(widthScreen - 50, 150);
 	m_SettingButton->SetSize(50, 50);
 	m_SettingButton->SetOnClick([]() {
@@ -42,12 +42,15 @@ void GSMenu::Init()
 		});
 
 	//button quit
-	m_QuitButton = std::make_shared<Button>("Texture", "Texture", "Menu/button_exit.tga", ButtonType::CIRCLE);
+	m_QuitButton = std::make_shared<Button>("Menu/button_exit.tga", "Texture", "Texture", ButtonType::CIRCLE);
 	m_QuitButton->SetPosition(widthScreen - 50, 75);
 	m_QuitButton->SetSize(50, 50);
 	m_QuitButton->SetOnClick([]() {
 			exit(0);
 		});
+
+	//Sound
+	ResourceManager::GetInstance()->PlaySound(AUDIO_TYPE::MUSIC, "music_game.wav", true);
 }
 
 void GSMenu::Update(float deltaTime)

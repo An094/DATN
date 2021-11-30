@@ -7,19 +7,8 @@
 
 extern GLint widthScreen;
 extern GLint heightScreen;
-//int width = 800;
-//int height = 800;
 
-Sprite2D::Sprite2D(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture)
-	:m_Model(model), m_Shader(shader), m_Texture(texture)
-{
-	m_Position = glm::vec3(0.0f, 0.0f, 0.0f);
-	m_TransMatrix = identifyMatrix;
-	m_RotateMatrix = identifyMatrix;
-	m_ScaleMatrix = identifyMatrix;
-}
-
-Sprite2D::Sprite2D(const std::string& modelName, const std::string& shaderName, const std::string& textureName)
+Sprite2D::Sprite2D(const std::string& textureName, const std::string& modelName, const std::string& shaderName)
 {
 	m_Model = ResourceManager::GetInstance()->GetModel(modelName);
 	m_Shader = ResourceManager::GetInstance()->GetShader(shaderName);
@@ -57,13 +46,9 @@ void Sprite2D::Draw()
 	m_Texture->texUnit(m_Shader, "tex0", 0);
 	m_Texture->Bind(0);
 
-	GLuint transUni = glGetUniformLocation(m_Shader->ID, "trans");
-	GLuint rotateUni = glGetUniformLocation(m_Shader->ID, "rotate");
-	GLuint scaleUni = glGetUniformLocation(m_Shader->ID, "scale");
-
-	glUniformMatrix4fv(transUni, 1, GL_FALSE, glm::value_ptr(m_TransMatrix));
-	glUniformMatrix4fv(rotateUni, 1, GL_FALSE, glm::value_ptr(m_RotateMatrix));
-	glUniformMatrix4fv(scaleUni, 1, GL_FALSE, glm::value_ptr(m_ScaleMatrix));
+	m_Shader->SetMatrix4f("trans", m_TransMatrix);
+	m_Shader->SetMatrix4f("rotate", m_RotateMatrix);
+	m_Shader->SetMatrix4f("scale", m_ScaleMatrix);
 
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
@@ -78,6 +63,15 @@ void Sprite2D::SetPosition(float xpos, float ypos)
 	glm::vec2 temp;
 	temp.x = (xpos - widthScreen * 0.5f) * 2.0f / widthScreen;
 	temp.y = (ypos - heightScreen * 0.5f) * 2.0f / heightScreen;
+	m_TransMatrix = glm::translate(identifyMatrix, glm::vec3(temp.x, temp.y, 0.0f));
+}
+
+void Sprite2D::SetPosition(glm::vec2 pos)
+{
+	m_Position = pos;
+	glm::vec2 temp;
+	temp.x = (pos.x - widthScreen * 0.5f) * 2.0f / widthScreen;
+	temp.y = (pos.y - heightScreen * 0.5f) * 2.0f / heightScreen;
 	m_TransMatrix = glm::translate(identifyMatrix, glm::vec3(temp.x, temp.y, 0.0f));
 }
 

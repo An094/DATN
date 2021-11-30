@@ -23,7 +23,7 @@ GSIntro::~GSIntro()
 void GSIntro::Init()
 {
 	m_Time = 0.0f;
-	m_logo = std::make_shared<Sprite2D>("Texture", "Texture", "logo.tga");
+	m_logo = std::make_shared<Sprite2D>("logo.tga");
 	m_logo->SetPosition(widthScreen / 2, heightScreen / 2);
 	m_logo->SetSize(150, 150);
 }
