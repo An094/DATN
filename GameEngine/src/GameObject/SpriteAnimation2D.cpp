@@ -4,7 +4,8 @@
 #include "VBO.h"
 #include "EBO.h"
 #include "Texture.h"
-
+#include "Application.h"
+#include "OrthographicCamera.h"
 SpriteAnimation2D::SpriteAnimation2D(const std::string& textureName, const std::string& modelName, const std::string& shaderName,
 	int numberFrame, float frameTime)
 	:Sprite2D(textureName, modelName, shaderName)
@@ -42,6 +43,8 @@ void SpriteAnimation2D::Draw()
 	GetTexture()->texUnit(GetShader(), "tex0", 0);
 	GetTexture()->Bind(0);
 
+	//GetShader()->SetMatrix4f("cam", (Application::GetInstance()->GetCamera())->GetViewProjectionMatrix());
+	GetShader()->SetMatrix4f("cam", glm::mat4(1.0f));
 	GetShader()->SetMatrix4f("trans", GetTransMatrix());
 	GetShader()->SetMatrix4f("rotate", GetRotateMatrix());
 	GetShader()->SetMatrix4f("scale", GetScaleMatrix());

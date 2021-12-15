@@ -5,14 +5,16 @@
 class Sprite2D;
 class SpriteAnimation2D;
 class Button;
+class OrthographicCamera;
 
 class Application
 {
 private:
 	static std::shared_ptr<Application> s_Instance;
-
+	std::shared_ptr<OrthographicCamera> m_Camera;
 	float m_currentTime;
 	int m_fpsCount;
+	int m_Key;
 public:
 	static std::shared_ptr<Application> GetInstance()
 	{
@@ -22,6 +24,7 @@ public:
 	}
 	Application();
 	~Application();
+	std::shared_ptr<OrthographicCamera> GetCamera();
 
 	void Init();
 	void Update(GLfloat deltaTime);

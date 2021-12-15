@@ -47,7 +47,7 @@ Text::Text(const std::string& fontFile, const std::string& content, int size, gl
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
 		m_length = m_Content.size();
-		// load first 128 characters of ASCII set
+		
 		for (int i = 0; i < m_length; i++)
 		{
 			// Load character glyph 

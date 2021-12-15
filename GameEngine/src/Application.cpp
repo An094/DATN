@@ -12,6 +12,7 @@
 #include "GameObject/Button.h"
 #include "GameObject/Text.h"
 #include "Utils/Log.h"
+#include "GameObject/OrthographicCamera.h"
 std::shared_ptr<Application> Application::s_Instance = nullptr;
 Application::Application()
 {
@@ -24,6 +25,11 @@ Application::~Application()
 
 }
 
+std::shared_ptr<OrthographicCamera> Application::GetCamera()
+{
+	return m_Camera;
+}
+
 void Application::Init()
 {
 	Log::Init();
@@ -33,7 +39,7 @@ void Application::Init()
 	ENGINE_INFO("Version: {0}", glGetString(GL_VERSION));
 	////Initialize data
 	ResourceManager::GetInstance()->Init();
-
+	m_Camera = std::make_shared<OrthographicCamera>(-1.0f, 1.0f, -1.0f, 1.0f);
 	if (!GameStateMachine::GetInstance()->HasState())
 	{
 		GameStateMachine::GetInstance()->ChangeState(0);//Push state 0
@@ -53,6 +59,23 @@ void Application::Update(GLfloat deltaTime)
 		ENGINE_TRACE("FPS: {}", m_fpsCount);
 		m_fpsCount = 0;
 	}
+	if (m_Key == GLFW_KEY_A)
+	{
+		m_Camera->MoveLeft(deltaTime);
+	}
+	else if (m_Key == GLFW_KEY_D)
+	{
+		m_Camera->MoveRight(deltaTime);
+	}
+	else if (m_Key == GLFW_KEY_W)
+	{
+		m_Camera->MoveUp(deltaTime);
+	}
+	else if (m_Key == GLFW_KEY_S)
+	{
+		m_Camera->MoveDown(deltaTime);
+	}
+	m_Key = 0;
 	GameStateMachine::GetInstance()->GetCurrentState()->Update(deltaTime);
 }
 
@@ -64,6 +87,7 @@ void Application::Draw()
 void Application::HandleKeyEvent(int key, bool isPressed)
 {
 	GameStateMachine::GetInstance()->GetCurrentState()->HandleKeyEvents(key, isPressed);
+	m_Key = key;
 }
 
 void Application::HandleTouchEvent(double xpos, double ypos, bool isPressed)

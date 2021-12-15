@@ -4,7 +4,8 @@
 #include "VBO.h"
 #include "EBO.h"
 #include "Texture.h"
-
+#include "Application.h"
+#include "OrthographicCamera.h"
 extern GLint widthScreen;
 extern GLint heightScreen;
 
@@ -45,7 +46,10 @@ void Sprite2D::Draw()
 
 	m_Texture->texUnit(m_Shader, "tex0", 0);
 	m_Texture->Bind(0);
-
+ 
+	glm::mat4 CameraMatrix = (Application::GetInstance()->GetCamera())->GetViewProjectionMatrix();
+	//glm::mat4 CameraMatrix = glm::mat4(1.0f);
+	m_Shader->SetMatrix4f("cam", CameraMatrix);
 	m_Shader->SetMatrix4f("trans", m_TransMatrix);
 	m_Shader->SetMatrix4f("rotate", m_RotateMatrix);
 	m_Shader->SetMatrix4f("scale", m_ScaleMatrix);
