@@ -9,50 +9,54 @@
 #include "soloud_wav.h"
 #include <vector>
 
-enum AUDIO_TYPE
+namespace EngineCore
 {
-	MUSIC = 0,
-	SOUND
-};
 
-class ResourceManager
-{
-public:
-	ResourceManager();
-	~ResourceManager();
-	static std::shared_ptr<ResourceManager> GetInstance();
-	void Init();
-	void AddShader(const std::string& name);
-	void AddTexture(const std::string& name);
-	void AddModel(const std::string& name);
+	enum AUDIO_TYPE
+	{
+		MUSIC = 0,
+		SOUND
+	};
 
-	//Sound
-	void AddSound(AUDIO_TYPE type,const std::string& name);
-	void PlaySound(AUDIO_TYPE type,const std::string& name, bool loop = false);
-	void PauseSound(const std::string& name);
+	class ResourceManager
+	{
+	public:
+		ResourceManager();
+		~ResourceManager();
+		static std::shared_ptr<ResourceManager> GetInstance();
+		void Init();
+		void AddShader(const std::string& name);
+		void AddTexture(const std::string& name);
+		void AddModel(const std::string& name);
 
-	std::shared_ptr<Shader> GetShader(const std::string& name);
-	std::shared_ptr<Texture> GetTexture(const std::string& name);
-	std::shared_ptr<Model> GetModel(const std::string& name);
+		//Sound
+		void AddSound(AUDIO_TYPE type, const std::string& name);
+		void PlaySound(AUDIO_TYPE type, const std::string& name, bool loop = false);
+		void PauseSound(const std::string& name);
 
-	void SetVolume(AUDIO_TYPE type, float volume);
-private:
-	std::string m_DataPath;
-	std::string m_ShaderPath;
-	std::string m_TexturePath;
-	std::string m_ModelPath;
-	std::string m_SoundsPath;//Add soundsPath
+		std::shared_ptr<Shader> GetShader(const std::string& name);
+		std::shared_ptr<Texture> GetTexture(const std::string& name);
+		std::shared_ptr<Model> GetModel(const std::string& name);
 
-	std::map<std::string, std::shared_ptr<Shader>> m_MapShader;
-	std::map<std::string, std::shared_ptr<Texture>> m_MapTexture;
-	std::map<std::string, std::shared_ptr<Model>> m_MapModel;
-	std::map<std::string, std::shared_ptr<SoLoud::Wav>> m_MapWave;//Add mapSound;
+		void SetVolume(AUDIO_TYPE type, float volume);
+	private:
+		std::string m_DataPath;
+		std::string m_ShaderPath;
+		std::string m_TexturePath;
+		std::string m_ModelPath;
+		std::string m_SoundsPath;//Add soundsPath
 
-	std::vector<SoLoud::handle> m_ListHandleMusic;
-	std::vector<SoLoud::handle> m_ListHandleSound;
+		std::map<std::string, std::shared_ptr<Shader>> m_MapShader;
+		std::map<std::string, std::shared_ptr<Texture>> m_MapTexture;
+		std::map<std::string, std::shared_ptr<Model>> m_MapModel;
+		std::map<std::string, std::shared_ptr<SoLoud::Wav>> m_MapWave;//Add mapSound;
 
-	SoLoud::Soloud m_Soloud;
+		std::vector<SoLoud::handle> m_ListHandleMusic;
+		std::vector<SoLoud::handle> m_ListHandleSound;
 
-	static std::shared_ptr<ResourceManager> s_Instance;
-};
+		SoLoud::Soloud m_Soloud;
 
+		static std::shared_ptr<ResourceManager> s_Instance;
+	};
+
+}

@@ -1,9 +1,5 @@
 #include "GSMenu.h"
-#include "GameObject/Button.h"
-#include "GameStateManager/GameStateMachine.h"
-#include "GameManager/ResourceManager.h"
-#include "GameObject/Button.h"
-#include "GameObject/Texture.h"
+
 
 extern GLint widthScreen;
 extern GLint heightScreen;
@@ -13,36 +9,36 @@ extern GLint lowestLogo;
 void GSMenu::Init()
 {
 	//backgroud
-	m_Background = std::make_shared<Sprite2D>("background.tga");
+	m_Background = std::make_shared<EngineCore::Sprite2D>("background.tga");
 	m_Background->SetPosition(widthScreen / 2, heightScreen / 2);
 	m_Background->SetSize(widthScreen, heightScreen);
 
 	//logo
-	m_Logo = std::make_shared<Sprite2D>("LogoGame.tga");
+	m_Logo = std::make_shared<EngineCore::Sprite2D>("LogoGame.tga");
 	m_Logo->SetPosition(widthScreen / 2, heightScreen * 3 / 4);
 	m_Logo->SetSize(400, 200);
 	logoGoDown = true;
 	speedLogo = 50.0f;
 
 	//button play
-	m_PlayButton = std::make_shared<Button>("Menu/button_play.tga");
+	m_PlayButton = std::make_shared<EngineCore::Button>("Menu/button_play.tga");
 	m_PlayButton->SetPosition(widthScreen / 2, heightScreen / 2 - 50);
 	m_PlayButton->SetSize(300, 150);
 	m_PlayButton->SetOnClick([]()
 		{
-			GameStateMachine::GetInstance()->ChangeState(2);//GSPlay
+			EngineCore::GameStateMachine::GetInstance()->ChangeState(2);//GSPlay
 		});
 
 	//button setting
-	m_SettingButton = std::make_shared<Button>("Menu/button_setting.tga", "Texture", "Texture", ButtonType::CIRCLE);
+	m_SettingButton = std::make_shared<EngineCore::Button>("Menu/button_setting.tga", "Texture", "Texture", EngineCore::ButtonType::CIRCLE);
 	m_SettingButton->SetPosition(widthScreen - 50, 150);
 	m_SettingButton->SetSize(50, 50);
 	m_SettingButton->SetOnClick([]() {
-			GameStateMachine::GetInstance()->ChangeState(3);//GSSetting
+			EngineCore::GameStateMachine::GetInstance()->ChangeState(3);//GSSetting
 		});
 
 	//button quit
-	m_QuitButton = std::make_shared<Button>("Menu/button_exit.tga", "Texture", "Texture", ButtonType::CIRCLE);
+	m_QuitButton = std::make_shared<EngineCore::Button>("Menu/button_exit.tga", "Texture", "Texture", EngineCore::ButtonType::CIRCLE);
 	m_QuitButton->SetPosition(widthScreen - 50, 75);
 	m_QuitButton->SetSize(50, 50);
 	m_QuitButton->SetOnClick([]() {
@@ -50,7 +46,7 @@ void GSMenu::Init()
 		});
 
 	//Sound
-	ResourceManager::GetInstance()->PlaySound(AUDIO_TYPE::MUSIC, "music_game.wav", true);
+	EngineCore::ResourceManager::GetInstance()->PlaySound(EngineCore::AUDIO_TYPE::MUSIC, "music_game.wav", true);
 }
 
 void GSMenu::Update(float deltaTime)

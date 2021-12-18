@@ -2,21 +2,28 @@
 
 #include "Sprite2D.h"
 
-enum ButtonType
+namespace EngineCore
 {
-	RECTANGLE = 0,
-	CIRCLE
-};
 
-class Button : public Sprite2D
-{
-public:
-	Button(const std::string&, const std::string& model = "Texture", const std::string& shader = "Texture", ButtonType type = ButtonType::RECTANGLE);
-	~Button();
-	void SetOnClick(void (*)());
-	void HandleTouchEvent(double xpos, double ypos, bool isPressed);
-private:
-	void (*Callback)();
-	ButtonType m_Type;
-};
+	enum class ButtonType
+	{
+		RECTANGLE = 0,
+		CIRCLE
+	};
 
+	class Button : public Sprite2D
+	{
+	public:
+		Button(const std::string& textureName, const std::string& modelName = "Texture", const std::string& shaderName = "Texture", ButtonType type = ButtonType::RECTANGLE)
+			: Sprite2D(textureName, modelName, shaderName), m_Type(type)
+		{
+		}
+		~Button() = default;
+		void SetOnClick(void (*)());
+		void HandleTouchEvent(int xpos, int ypos, bool isPressed);
+	private:
+		void (*Callback)();
+		ButtonType m_Type;
+	};
+
+}

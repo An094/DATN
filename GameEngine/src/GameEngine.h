@@ -5,3 +5,5 @@
 #include<GameObject/Window.h>
 
 #include<GameStateManager/GameStateMachine.h>
+
+using namespace EngineCore;

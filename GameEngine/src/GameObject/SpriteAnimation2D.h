@@ -1,18 +1,23 @@
 #pragma once
 #include "Sprite2D.h"
-class SpriteAnimation2D : public Sprite2D
+
+namespace EngineCore
 {
-public:
-	SpriteAnimation2D(const std::string&, const std::string&, const std::string&, int, float);
-	~SpriteAnimation2D();
+	class SpriteAnimation2D : public Sprite2D
+	{
+	public:
+		SpriteAnimation2D(const std::string&, const std::string&, const std::string&, int, float);
+		~SpriteAnimation2D() = default;
 
-	void Init();
-	void Draw();
-	void Update(float);
-private:
-	int m_CurrentFrame;
-	float m_CurrentTime;
-	int m_NumberFrame;
-	float m_FrameTime;
-};
+		void Init();
+		void Draw() override;
+		void Update(float) override;
+	private:
+		int m_CurrentFrame;
+		float m_CurrentTime;
+		int m_NumberFrame;
+		float m_FrameTime;
+	};
 
+
+}

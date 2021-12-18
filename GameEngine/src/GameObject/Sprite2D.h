@@ -4,49 +4,54 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-class Model;
-class Shader;
-class Texture;
-class Sprite2D
+namespace EngineCore
 {
-private:
-	const glm::mat4 identifyMatrix = glm::mat4(1.0f);
+	class Model;
+	class Shader;
+	class Texture;
+	class Sprite2D
+	{
+	private:
+		const glm::mat4 identifyMatrix = glm::mat4(1.0f);
 
-	std::shared_ptr<Model> m_Model;
-	std::shared_ptr<Shader> m_Shader;
-	std::shared_ptr<Texture> m_Texture;
-	
-	glm::vec2 m_Position;
-	glm::mat4 m_TransMatrix;
-	glm::mat4 m_RotateMatrix;
-	glm::mat4 m_ScaleMatrix;
-	int m_Width, m_Height;
-public:
-	//Default model and texture of Sprite2D is Texture
-	Sprite2D(const std::string& ,const std::string& model = "Texture", const std::string& shader = "Texture");
-	~Sprite2D();
-	//Getter
-	inline std::shared_ptr<Texture> GetTexture() { return m_Texture; }
-	inline std::shared_ptr<Model> GetModel() { return m_Model; }
-	inline std::shared_ptr<Shader> GetShader() { return m_Shader; }
+		std::shared_ptr<Model> m_Model;
+		std::shared_ptr<Shader> m_Shader;
+		std::shared_ptr<Texture> m_Texture;
 
-	inline glm::mat4 GetTransMatrix() { return m_TransMatrix; }
-	inline glm::mat4 GetRotateMatrix() { return m_RotateMatrix; }
-	inline glm::mat4 GetScaleMatrix() { return m_ScaleMatrix; }
+		glm::vec2 m_Position;
+		glm::mat4 m_TransMatrix;
+		glm::mat4 m_RotateMatrix;
+		glm::mat4 m_ScaleMatrix;
+		int m_Width, m_Height;
+	public:
+		//Default model and texture of Sprite2D is Texture
+		Sprite2D(const std::string&, const std::string& model = "Texture", const std::string& shader = "Texture");
+		~Sprite2D();
+		//Getter
+		inline std::shared_ptr<Texture> GetTexture() { return m_Texture; }
+		inline std::shared_ptr<Model> GetModel() { return m_Model; }
+		inline std::shared_ptr<Shader> GetShader() { return m_Shader; }
 
-	inline glm::vec2 GetPosition() { return m_Position; }
-	inline void GetSize(int& width, int& height) {
-		width = m_Width;
-		height = m_Height;
-	}
+		inline glm::mat4 GetTransMatrix() { return m_TransMatrix; }
+		inline glm::mat4 GetRotateMatrix() { return m_RotateMatrix; }
+		inline glm::mat4 GetScaleMatrix() { return m_ScaleMatrix; }
 
-	//Setter
-	void SetPosition(float xpos, float ypos);
-	void SetPosition(glm::vec2);
+		glm::vec2 GetPosition();
 
-	void SetSize(int width, int height);
+		inline void GetSize(int& width, int& height) {
+			width = m_Width;
+			height = m_Height;
+		}
 
-	void Init();
-	void Draw();
-};
+		//Setter
+		void SetPosition(float xpos, float ypos);
+		void SetPosition(glm::vec2);
 
+		void SetSize(int width, int height);
+
+		void Init();
+		virtual void Draw();
+		virtual void Update(float deltaTime){}
+	};
+
+}

@@ -1,10 +1,13 @@
 #pragma once
 #include "GameStateManager/GameStateBase.h"
-class Sprite2D;
-class SpriteAnimation2D;
-class Button;
-class Text;
-class GSIntro : public GameStateBase
+#include "GameStateManager/GameStateMachine.h"
+#include "GameObject/Sprite2D.h"
+#include "GameObject/SpriteAnimation2D.h"
+#include "GameObject/Button.h"
+#include "GameObject/Text.h"
+#include "GameManager/ResourceManager.h"
+#include "Utils/Log.h"
+class GSIntro : public EngineCore::GameStateBase
 {
 public:
 	GSIntro();
@@ -18,7 +21,7 @@ public:
 	void HandleKeyEvents(int key, bool bIsPressed);
 	void HandleTouchEvents(int x, int y, bool bIsPressed);
 private:
-	std::shared_ptr<Sprite2D> m_logo;
+	std::shared_ptr<EngineCore::Sprite2D> m_logo;
 	float m_Time;
 };
 

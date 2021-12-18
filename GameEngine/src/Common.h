@@ -1,5 +1,4 @@
-#ifndef COMMON_HPP
-#define COMMON_HPP
+#pragma once
 
 #include<string>
 #include<fstream>
@@ -7,12 +6,12 @@
 #include<iostream>
 #include<cerrno>
 
+namespace EngineCore {
 
-class Common {
-public:
-	static std::string get_file_contents(const char* filename);
-};
+	class Common 
+	{
+	public:
+		static std::string get_file_contents(const char* filename);
+	};
 
-
-
-#endif // !COMMON_H
+}
