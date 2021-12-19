@@ -7,6 +7,7 @@
 #include "GameObject/Text.h"
 #include "GameManager/ResourceManager.h"
 #include "../GameObjects/Player.h"
+#include "../GameObjects/MapController.h"
 
 class GSPlay : public EngineCore::GameStateBase
 {
@@ -22,10 +23,7 @@ public:
 	void HandleKeyEvents(int key, bool bIsPressed);
 	void HandleTouchEvents(int x, int y, bool bIsPressed);
 private:
-	std::shared_ptr<Player> m_Player;
-	std::shared_ptr<EngineCore::Sprite2D> m_sprite2d;
-
+	std::shared_ptr<EngineCore::Sprite2D> m_Background;
 	std::shared_ptr<EngineCore::Button> m_button;
-
-	std::shared_ptr<EngineCore::Text> m_text;
+	std::shared_ptr<MapController> m_MapController;
 };

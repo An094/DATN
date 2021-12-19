@@ -3,10 +3,10 @@
 
 enum  class DIRECTION
 {
-	LEFT = 0,
-	UP,
+	UP = 0,
 	RIGHT,
-	DOWN
+	DOWN,
+	LEFT
 };
 class DynamicObject
 {

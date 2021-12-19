@@ -8,7 +8,7 @@
 class Player : public DynamicObject
 {
 public:
-	Player();
+	Player(DIRECTION);
 	bool IsAlive() { return isAlive; }
 	void SetIsAlive(bool isA) { isAlive = isA; }
 
@@ -17,10 +17,11 @@ public:
 	void Draw();
 	void HandleKeyEvents(int key, bool bIsPressed);
 
+	void ChangeSizeOfSprite(int newXSize, int newYSize);
 private:
 	bool isAlive;
+	int XSpriteSize, YSpriteSize;
 	std::vector<std::shared_ptr<EngineCore::Sprite2D>> m_ListSprite;
-	std::queue<int> m_QueueKeyEvent;
-	int m_Key;
+	std::queue<int> m_QueueKeyEvent; //Use in future
 };
 

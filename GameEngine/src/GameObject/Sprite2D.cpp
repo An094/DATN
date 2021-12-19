@@ -50,7 +50,6 @@ namespace EngineCore
 		m_Texture->Bind(0);
 
 		glm::mat4 CameraMatrix = (Application::GetInstance()->GetCamera())->GetViewProjectionMatrix();
-		//std::cout << CameraMatrix[0][0] << std::endl;
 		m_Shader->SetMatrix4f("cam", CameraMatrix);
 		m_Shader->SetMatrix4f("trans", m_TransMatrix);
 		m_Shader->SetMatrix4f("rotate", m_RotateMatrix);
