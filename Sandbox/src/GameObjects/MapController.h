@@ -34,5 +34,6 @@ private:
 	DynamicObjectData m_PlayerData;
 	std::shared_ptr<Player> m_Player;
 	std::vector<std::shared_ptr<Enemy>> m_ListEnemies;
+	int m_KeyPressed;
 };
 

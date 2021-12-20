@@ -49,6 +49,9 @@ namespace EngineCore
 
 		void SetSize(int width, int height);
 
+		void ChangeTexture(const std::string& newTexture);
+		void ChangeTexture(std::shared_ptr<Texture> newTexture);
+
 		void Init();
 		virtual void Draw();
 		virtual void Update(float deltaTime){}

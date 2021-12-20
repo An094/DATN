@@ -12,16 +12,19 @@ public:
 	bool IsAlive() { return isAlive; }
 	void SetIsAlive(bool isA) { isAlive = isA; }
 
-	void Init();
 	void Update(float deltaTime);
 	void Draw();
 	void HandleKeyEvents(int key, bool bIsPressed);
 
-	void ChangeSizeOfSprite(int newXSize, int newYSize);
+	void MoveUp(float);
+	void MoveRight(float);
+	void MoveDown(float);
+	void MoveLeft(float);
 private:
 	bool isAlive;
-	int XSpriteSize, YSpriteSize;
-	std::vector<std::shared_ptr<EngineCore::Sprite2D>> m_ListSprite;
+	int m_WidthSize, m_HeightSize;
+	std::vector<std::shared_ptr<EngineCore::Texture>> m_ListTexture;
 	std::queue<int> m_QueueKeyEvent; //Use in future
+	float m_Speed;
 };
 

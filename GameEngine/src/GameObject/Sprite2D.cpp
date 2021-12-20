@@ -98,4 +98,14 @@ namespace EngineCore
 		return temp;*/
 		return m_Position;
 	}
+
+	void Sprite2D::ChangeTexture(const std::string& newTexture)
+	{
+		m_Texture = ResourceManager::GetInstance()->GetTexture(newTexture);
+	}
+
+	void Sprite2D::ChangeTexture(std::shared_ptr<Texture> newTexture)
+	{
+		m_Texture = newTexture;
+	}
 }

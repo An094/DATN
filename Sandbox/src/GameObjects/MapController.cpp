@@ -1,5 +1,8 @@
 #include "MapController.h"
 #include "GameEngine.h"
+#include "Application.h"
+#include "GameObject/OrthographicCamera.h"
+#include "Soldier.h"
 #include <fstream>
 
 extern GLint widthScreen;
@@ -31,8 +34,6 @@ MapController::MapController(int level)
 
 	//Initialize Player
 	m_Player = std::make_shared<Player>(m_PlayerData.Direction);
-	m_Player->Init();
-	m_Player->SetIsAlive(true);
 
 	int length, height;
 	length = iDataFileArray[it++];
@@ -62,7 +63,27 @@ MapController::MapController(int level)
 	}
 
 	int numberEnemies = iDataFileArray[it++];
+	for (int i = 0; i < numberEnemies; i++)
+	{
+		int type = iDataFileArray[it++];
+		
+		if (type == 0)
+		{
+			int startX = iDataFileArray[it++];
+			int startY = iDataFileArray[it++];
+			int direction = iDataFileArray[it++];
+			int maxDistance = iDataFileArray[it++];
 
+			int distaneToPlayerX = (startX - m_PlayerData.StartPoint.x) * TILEMAP_SIZE + widthScreen/2;
+			int distaneToPlayerY = (startY - m_PlayerData.StartPoint.y) * TILEMAP_SIZE + heightScreen/2; 
+
+			std::shared_ptr<Soldier> tmpSoldier = std::make_shared<Soldier>(static_cast<DIRECTION>(direction), maxDistance, 600.0f);
+			tmpSoldier->SetPosition(distaneToPlayerX, distaneToPlayerY);
+			tmpSoldier->SetSize(60, 60);
+
+			m_ListEnemies.push_back(tmpSoldier);
+		}
+	}
 
 
 	//Deallocate 
@@ -90,14 +111,48 @@ void MapController::Draw()
 {
 	DrawMap();
 	m_Player->Draw();
+
+	for (auto it : m_ListEnemies)
+	{
+		it->Draw();
+	}
 }
 
 void MapController::Update(float deltaTime)
 {
+	std::shared_ptr<EngineCore::OrthographicCamera> cam = EngineCore::Application::GetInstance()->GetCamera();
+	if (m_KeyPressed == GLFW_KEY_W)
+	{
+		m_Player->MoveUp(deltaTime);
+		cam->MoveUp(deltaTime);
+	}
+	else if (m_KeyPressed == GLFW_KEY_D)
+	{
+		m_Player->MoveRight(deltaTime);
+		cam->MoveRight(deltaTime);
+	}
+	else if (m_KeyPressed == GLFW_KEY_S)
+	{
+		m_Player->MoveDown(deltaTime);
+		cam->MoveDown(deltaTime);
+	}
+	else if (m_KeyPressed == GLFW_KEY_A)
+	{
+		m_Player->MoveLeft(deltaTime);
+		cam->MoveLeft(deltaTime);
+	}
+	m_KeyPressed = 0;
 	m_Player->Update(deltaTime);
+
+	for (auto it : m_ListEnemies)
+	{
+		it->Update(deltaTime);
+	}
 }
 
 void MapController::HandleKeyEvent(int key, bool isPressed)
 {
 	m_Player->HandleKeyEvents(key, isPressed);
+	//Camera
+	m_KeyPressed = key;
 }
