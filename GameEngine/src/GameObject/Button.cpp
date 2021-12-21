@@ -14,7 +14,7 @@ namespace EngineCore
 			bool secondCondition = ypos >= GetPosition()[1] - height * 0.5f && ypos <= GetPosition()[1] + height * 0.5f;
 			condition = firstCondition && secondCondition;
 		}
-		else
+		else if (m_Type == ButtonType::CIRCLE)
 		{
 			condition = pow(GetPosition()[0] - xpos, 2) + pow(GetPosition()[1] - ypos, 2) <= pow(width * 0.5, 2);
 		}

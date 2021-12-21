@@ -72,12 +72,12 @@ MapController::MapController(int level)
 			int startX = iDataFileArray[it++];
 			int startY = iDataFileArray[it++];
 			int direction = iDataFileArray[it++];
-			int maxDistance = iDataFileArray[it++];
+			int maxDistance = iDataFileArray[it++] * TILEMAP_SIZE;
 
 			int distaneToPlayerX = (startX - m_PlayerData.StartPoint.x) * TILEMAP_SIZE + widthScreen/2;
 			int distaneToPlayerY = (startY - m_PlayerData.StartPoint.y) * TILEMAP_SIZE + heightScreen/2; 
 
-			std::shared_ptr<Soldier> tmpSoldier = std::make_shared<Soldier>(static_cast<DIRECTION>(direction), maxDistance, 600.0f);
+			std::shared_ptr<Soldier> tmpSoldier = std::make_shared<Soldier>(static_cast<DIRECTION>(direction), maxDistance, 100.0f);
 			tmpSoldier->SetPosition(distaneToPlayerX, distaneToPlayerY);
 			tmpSoldier->SetSize(60, 60);
 
@@ -146,6 +146,10 @@ void MapController::Update(float deltaTime)
 
 	for (auto it : m_ListEnemies)
 	{
+		if(CheckCollision(m_Player, it))
+		{
+			CLIENT_INFO("COLLISION OCCUR");
+		}
 		it->Update(deltaTime);
 	}
 }
@@ -155,4 +159,34 @@ void MapController::HandleKeyEvent(int key, bool isPressed)
 	m_Player->HandleKeyEvents(key, isPressed);
 	//Camera
 	m_KeyPressed = key;
+}
+
+bool MapController::CheckCollision(std::shared_ptr<DynamicObject> obj1, std::shared_ptr<DynamicObject> obj2)
+{
+	int deltaCollision = 20;
+	glm::vec2 pos1 = obj1->GetPosition();
+	glm::vec2 pos2 = obj2->GetPosition();
+	
+	int width1, width2, height1, height2;
+	obj1->GetSize(width1, height1);
+	obj2->GetSize(width2, height2);
+
+	int top1 = pos1.y + height1 / 2;
+	int bot1 = top1 - height1;
+	int left1 = pos1.x - width1 / 2;
+	int right1 = left1 + width1;
+
+	int top2 = pos2.y + height2 / 2;
+	int bot2 = top2 - height2;
+	int left2 = pos2.x - width2 / 2;
+	int right2 = left2 + width2;
+
+	if (top1 - deltaCollision < bot2 || bot1 + deltaCollision> top2 || left1 + deltaCollision > right2 || right1 - deltaCollision < left2)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
 }

@@ -19,6 +19,43 @@ Soldier::Soldier(DIRECTION dir, float maxD, float speed)
 
 void Soldier::Update(float deltaTime)
 {
+	if (m_Distance >= m_MaxDistance)
+	{
+		int reverseDir = (static_cast<int>(GetDirection()) + 2) % 4;
+		SetDirection(static_cast<DIRECTION>(reverseDir));
+		SetCurrentTexture(m_ListTexture[reverseDir]);
+		m_Distance = m_MaxDistance - m_Distance;
+	}
+	else
+	{
+		glm::vec2 currentPos = GetPosition();
+		float deltaDistance = GetSpeed() * deltaTime;
+		m_Distance += deltaDistance;
+		switch (GetDirection())
+		{
+			case DIRECTION::UP:
+			{
+				currentPos[1] += deltaDistance;	
+				break;
+			}
+			case DIRECTION::RIGHT:
+			{
+				currentPos[0] += deltaDistance;
+				break;
+			}
+			case DIRECTION::DOWN:
+			{
+				currentPos[1] -= GetSpeed() * deltaTime;
+				break;
+			}
+			case DIRECTION::LEFT:
+			{
+				currentPos[0] -= GetSpeed() * deltaTime;
+				break;
+			}
+		}
+		SetPosition(currentPos);
+	}
 	GetSprite()->Update(deltaTime);
 }
 

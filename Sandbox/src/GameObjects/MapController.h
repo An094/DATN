@@ -28,6 +28,7 @@ public:
 	void HandleKeyEvent(int key, bool isPressed);
 	DynamicObjectData GetPlayerData();
 	std::shared_ptr<Player> GetPlayer() { return m_Player; }
+	bool CheckCollision(std::shared_ptr<DynamicObject> obj1, std::shared_ptr<DynamicObject> obj2);
 private:
 	int m_Level;
 	std::vector<std::shared_ptr<EngineCore::Sprite2D>> m_ListTileMap;
