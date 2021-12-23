@@ -2,7 +2,7 @@
 #include "GameManager/ResourceManager.h"
 extern GLint widthScreen;
 extern GLint heightScreen;
-Player::Player(DIRECTION dir) : DynamicObject(dir, 100.f) , isAlive(true), KEY(0)
+Player::Player(DIRECTION dir) : DynamicObject(dir, 100.f) , isAlive(true), KEY(0), CanUp(true), CanRight(true), CanDown(true), CanLeft(true)
 {
 	std::shared_ptr<EngineCore::Texture> tmpTexture = EngineCore::ResourceManager::GetInstance()->GetTexture("Poo/poo_up.tga");
 	m_ListTexture.push_back(tmpTexture);
@@ -21,25 +21,27 @@ Player::Player(DIRECTION dir) : DynamicObject(dir, 100.f) , isAlive(true), KEY(0
 
 void Player::Update(float deltaTime)
 {
-	if (KEY == GLFW_KEY_W)
+	//std::cout << "Can Up: " << CanUp << std::endl;
+	//std::cout << "Can Down: " << CanDown << std::endl;
+	if (KEY == GLFW_KEY_W && CanUp)
 	{
 		SetDirection(DIRECTION::UP);
 		SetCurrentTexture(m_ListTexture[0]);
 		MoveUp(deltaTime);
 	}
-	else if (KEY == GLFW_KEY_D)
+	else if (KEY == GLFW_KEY_D && CanRight)
 	{
 		SetDirection(DIRECTION::RIGHT);
 		SetCurrentTexture(m_ListTexture[1]);
 		MoveRight(deltaTime);
 	}
-	else if (KEY == GLFW_KEY_S)
+	else if (KEY == GLFW_KEY_S && CanDown)
 	{
 		SetDirection(DIRECTION::DOWN);
 		SetCurrentTexture(m_ListTexture[2]);
 		MoveDown(deltaTime);
 	}
-	else if (KEY == GLFW_KEY_A)
+	else if (KEY == GLFW_KEY_A && CanLeft)
 	{
 		SetDirection(DIRECTION::LEFT);
 		SetCurrentTexture(m_ListTexture[3]);
@@ -69,7 +71,7 @@ void Player::HandleKeyEvents(int key, bool isPressed)
 void Player::MoveUp(float deltaTime)
 {
 	glm::vec2 currentPos = GetPosition();
-	currentPos[1] += GetSpeed() * deltaTime;
+	currentPos[1] -= GetSpeed() * deltaTime;
 	SetPosition(currentPos);
 }
 
@@ -83,7 +85,7 @@ void Player::MoveRight(float deltaTime)
 void Player::MoveDown(float deltaTime)
 {
 	glm::vec2 currentPos = GetPosition();
-	currentPos[1] -= GetSpeed() * deltaTime;
+	currentPos[1] += GetSpeed() * deltaTime;
 	SetPosition(currentPos);
 }
 

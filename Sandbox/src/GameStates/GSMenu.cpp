@@ -15,14 +15,14 @@ void GSMenu::Init()
 
 	//logo
 	m_Logo = std::make_shared<EngineCore::Sprite2D>("LogoGame.tga");
-	m_Logo->SetPosition(widthScreen / 2, heightScreen * 3 / 4);
+	m_Logo->SetPosition(widthScreen / 2, heightScreen / 4);
 	m_Logo->SetSize(400, 200);
 	logoGoDown = true;
 	speedLogo = 50.0f;
 
 	//button play
 	m_PlayButton = std::make_shared<EngineCore::Button>("Menu/button_play.tga");
-	m_PlayButton->SetPosition(widthScreen / 2, heightScreen / 2 - 50);
+	m_PlayButton->SetPosition(widthScreen / 2, heightScreen / 2 + 50);
 	m_PlayButton->SetSize(300, 150);
 	m_PlayButton->SetOnClick([]()
 		{
@@ -31,7 +31,7 @@ void GSMenu::Init()
 
 	//button setting
 	m_SettingButton = std::make_shared<EngineCore::Button>("Menu/button_setting.tga", "Texture", "Texture", EngineCore::ButtonType::CIRCLE);
-	m_SettingButton->SetPosition(widthScreen - 50, 150);
+	m_SettingButton->SetPosition(widthScreen - 50, 650);
 	m_SettingButton->SetSize(50, 50);
 	m_SettingButton->SetOnClick([]() {
 			EngineCore::GameStateMachine::GetInstance()->ChangeState(3);//GSSetting
@@ -39,7 +39,7 @@ void GSMenu::Init()
 
 	//button quit
 	m_QuitButton = std::make_shared<EngineCore::Button>("Menu/button_exit.tga", "Texture", "Texture", EngineCore::ButtonType::CIRCLE);
-	m_QuitButton->SetPosition(widthScreen - 50, 75);
+	m_QuitButton->SetPosition(widthScreen - 50, 725);
 	m_QuitButton->SetSize(50, 50);
 	m_QuitButton->SetOnClick([]() {
 			exit(0);
@@ -52,14 +52,15 @@ void GSMenu::Init()
 void GSMenu::Update(float deltaTime)
 {
 	float ypos = m_Logo->GetPosition().y;
+	//std::cout << "yPos:" << ypos<<std::endl;
 	float xpos = m_Logo->GetPosition().x;
-	if (logoGoDown && ypos > lowestLogo)
-	{
-		m_Logo->SetPosition(xpos, ypos - speedLogo * deltaTime);
-	}
-	else if(!logoGoDown && ypos < hightestLogo)
+	if (logoGoDown && ypos < lowestLogo)
 	{
 		m_Logo->SetPosition(xpos, ypos + speedLogo * deltaTime);
+	}
+	else if(!logoGoDown && ypos > hightestLogo)
+	{
+		m_Logo->SetPosition(xpos, ypos - speedLogo * deltaTime);
 	}
 	else
 	{

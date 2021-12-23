@@ -78,7 +78,7 @@ namespace EngineCore
 		m_Position = glm::vec2(xpos, ypos);
 		glm::vec2 temp;
 		temp.x = (xpos - widthScreen * 0.5f) * 2.0f / widthScreen;
-		temp.y = (ypos - heightScreen * 0.5f) * 2.0f / heightScreen;
+		temp.y = (heightScreen - ypos - heightScreen * 0.5f) * 2.0f / heightScreen;
 		m_TransMatrix = glm::translate(identifyMatrix, glm::vec3(temp.x, temp.y, 0.0f));
 	}
 
@@ -87,7 +87,7 @@ namespace EngineCore
 		m_Position = pos;
 		glm::vec2 temp;
 		temp.x = (pos.x - widthScreen * 0.5f) * 2.0f / widthScreen;
-		temp.y = (pos.y - heightScreen * 0.5f) * 2.0f / heightScreen;
+		temp.y = (heightScreen - pos.y - heightScreen * 0.5f) * 2.0f / heightScreen;
 		m_TransMatrix = glm::translate(identifyMatrix, glm::vec3(temp.x, temp.y, 0.0f));
 	}
 

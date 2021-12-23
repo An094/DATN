@@ -35,7 +35,7 @@ void Soldier::Update(float deltaTime)
 		{
 			case DIRECTION::UP:
 			{
-				currentPos[1] += deltaDistance;	
+				currentPos[1] -= deltaDistance;	
 				break;
 			}
 			case DIRECTION::RIGHT:
@@ -45,7 +45,7 @@ void Soldier::Update(float deltaTime)
 			}
 			case DIRECTION::DOWN:
 			{
-				currentPos[1] -= deltaDistance;
+				currentPos[1] += deltaDistance;
 				break;
 			}
 			case DIRECTION::LEFT:

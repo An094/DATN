@@ -20,6 +20,10 @@ public:
 	void MoveRight(float);
 	void MoveDown(float);
 	void MoveLeft(float);
+	bool CanUp;
+	bool CanDown;
+	bool CanLeft;
+	bool CanRight;
 private:
 	bool isAlive;
 	int m_WidthSize, m_HeightSize;

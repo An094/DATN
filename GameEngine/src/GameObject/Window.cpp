@@ -151,7 +151,7 @@ namespace EngineCore
 		if (!isPressed)
 		{
 			//Origin of OpenGL is Top Left corner
-			Application::GetInstance()->HandleTouchEvent(xpos, heightScreen - ypos, isPressed);
+			Application::GetInstance()->HandleTouchEvent(xpos, ypos, isPressed);
 		}
 	}
 
