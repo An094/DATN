@@ -1,5 +1,6 @@
 #include "GSPlay.h"
-
+#include "Application.h"
+#include "GameObject/OrthographicCamera.h"
 
 extern GLint widthScreen;
 extern GLint heightScreen;
@@ -25,6 +26,7 @@ void GSPlay::Init()
 	m_button->SetSize(100, 100);
 	m_button->SetOnClick([]()
 		{
+			(EngineCore::Application::GetInstance()->GetCamera())->ResetMatrix();
 			EngineCore::GameStateMachine::GetInstance()->PopState();
 		});
 

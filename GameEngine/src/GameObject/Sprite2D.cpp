@@ -20,6 +20,7 @@ namespace EngineCore
 		m_TransMatrix = identifyMatrix;
 		m_RotateMatrix = identifyMatrix;
 		m_ScaleMatrix = identifyMatrix;
+		isMoveWithCam = true;
 	}
 
 	Sprite2D::~Sprite2D()
@@ -49,7 +50,17 @@ namespace EngineCore
 		m_Texture->texUnit(m_Shader, "tex0", 0);
 		m_Texture->Bind(0);
 
-		glm::mat4 CameraMatrix = (Application::GetInstance()->GetCamera())->GetViewProjectionMatrix();
+		glm::mat4 CameraMatrix;
+		
+		if (isMoveWithCam)
+		{
+			CameraMatrix = (Application::GetInstance()->GetCamera())->GetViewProjectionMatrix();
+		}
+		else
+		{
+			CameraMatrix = identifyMatrix;
+		}
+		
 		m_Shader->SetMatrix4f("cam", CameraMatrix);
 		m_Shader->SetMatrix4f("trans", m_TransMatrix);
 		m_Shader->SetMatrix4f("rotate", m_RotateMatrix);

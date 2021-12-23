@@ -18,7 +18,7 @@ namespace EngineCore
 	public:
 		OrthographicCamera(float left, float right, float bottom, float top);
 
-		void SetProjection(float left, float right, float bottom, float top);
+		void ResetMatrix();
 
 		const glm::vec3& GetPosition() const { return m_Position; }
 		void SetPosition(const glm::vec3& position) { m_Position = position; RecalculateViewMatrix(); }
@@ -29,6 +29,9 @@ namespace EngineCore
 		const glm::mat4& GetProjectionMatrix() const { return m_ProjectionMatrix; }
 		const glm::mat4& GetViewMatrix() const { return m_ViewMatrix; }
 		const glm::mat4& GetViewProjectionMatrix() const { return m_ViewProjectionMatrix; }
+
+		void HandleKeyEvents(int key, bool isPressed);
+		void Update(float deltaTime);
 
 		void MoveUp(float);
 		void MoveDown(float);
@@ -43,6 +46,8 @@ namespace EngineCore
 		glm::vec3 m_Position = { 0.0f, 0.0f, 0.0f };
 		float m_Rotation = 0.0f;
 		float m_CameraRotation = 0.0f; //In degrees, in the anti-clockwise direction
-		float m_CameraTranslationSpeed = 1.5f;
+		float m_CameraHorizontalTranslationSpeed = 0.33333f;
+		float m_CameraVerticalTranslationSpeed = 0.25;
+		int KEY;
 	};
 }

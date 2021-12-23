@@ -45,12 +45,12 @@ void Soldier::Update(float deltaTime)
 			}
 			case DIRECTION::DOWN:
 			{
-				currentPos[1] -= GetSpeed() * deltaTime;
+				currentPos[1] -= deltaDistance;
 				break;
 			}
 			case DIRECTION::LEFT:
 			{
-				currentPos[0] -= GetSpeed() * deltaTime;
+				currentPos[0] -= deltaDistance;
 				break;
 			}
 		}

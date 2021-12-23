@@ -26,5 +26,6 @@ private:
 	std::vector<std::shared_ptr<EngineCore::Texture>> m_ListTexture;
 	std::queue<int> m_QueueKeyEvent; //Use in future
 	float m_Speed;
+	int KEY;
 };
 

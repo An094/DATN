@@ -17,6 +17,7 @@ namespace EngineCore
 		Button(const std::string& textureName, const std::string& modelName = "Texture", const std::string& shaderName = "Texture", ButtonType type = ButtonType::RECTANGLE)
 			: Sprite2D(textureName, modelName, shaderName), m_Type(type)
 		{
+			isMoveWithCam = false;
 		}
 		~Button() = default;
 		void SetOnClick(void (*)());

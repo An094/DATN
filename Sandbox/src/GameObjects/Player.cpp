@@ -2,7 +2,7 @@
 #include "GameManager/ResourceManager.h"
 extern GLint widthScreen;
 extern GLint heightScreen;
-Player::Player(DIRECTION dir) : DynamicObject(dir, 600.f) , isAlive(true)
+Player::Player(DIRECTION dir) : DynamicObject(dir, 100.f) , isAlive(true), KEY(0)
 {
 	std::shared_ptr<EngineCore::Texture> tmpTexture = EngineCore::ResourceManager::GetInstance()->GetTexture("Poo/poo_up.tga");
 	m_ListTexture.push_back(tmpTexture);
@@ -15,13 +15,36 @@ Player::Player(DIRECTION dir) : DynamicObject(dir, 600.f) , isAlive(true)
 
 	SetSprite(std::make_shared<EngineCore::SpriteAnimation2D>("Poo/poo_up.tga", "Texture", "Animation", 6, 0.1f));
 	SetCurrentTexture(m_ListTexture[static_cast<int>(GetDirection())]);
-	SetSize(60, 60);
+	SetSize(70, 70);
 	SetPosition(widthScreen / 2, heightScreen / 2);
 }
 
 void Player::Update(float deltaTime)
 {
-	SetCurrentTexture(m_ListTexture[static_cast<int>(GetDirection())]);
+	if (KEY == GLFW_KEY_W)
+	{
+		SetDirection(DIRECTION::UP);
+		SetCurrentTexture(m_ListTexture[0]);
+		MoveUp(deltaTime);
+	}
+	else if (KEY == GLFW_KEY_D)
+	{
+		SetDirection(DIRECTION::RIGHT);
+		SetCurrentTexture(m_ListTexture[1]);
+		MoveRight(deltaTime);
+	}
+	else if (KEY == GLFW_KEY_S)
+	{
+		SetDirection(DIRECTION::DOWN);
+		SetCurrentTexture(m_ListTexture[2]);
+		MoveDown(deltaTime);
+	}
+	else if (KEY == GLFW_KEY_A)
+	{
+		SetDirection(DIRECTION::LEFT);
+		SetCurrentTexture(m_ListTexture[3]);
+		MoveLeft(deltaTime);
+	}
 	GetSprite()->Update(deltaTime);
 }
 
@@ -32,21 +55,13 @@ void Player::Draw()
 
 void Player::HandleKeyEvents(int key, bool isPressed)
 {
-	if (key == GLFW_KEY_W)
+	if (isPressed)
 	{
-		SetDirection(DIRECTION::UP);
+		KEY = key;
 	}
-	else if (key == GLFW_KEY_D)
+	else
 	{
-		SetDirection(DIRECTION::RIGHT);
-	}
-	else if (key == GLFW_KEY_S)
-	{
-		SetDirection(DIRECTION::DOWN);
-	}
-	else if (key == GLFW_KEY_A)
-	{
-		SetDirection(DIRECTION::LEFT);
+		KEY = 0;
 	}
 }
 

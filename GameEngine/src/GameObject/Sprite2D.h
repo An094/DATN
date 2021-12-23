@@ -23,6 +23,7 @@ namespace EngineCore
 		glm::mat4 m_RotateMatrix;
 		glm::mat4 m_ScaleMatrix;
 		int m_Width, m_Height;
+
 	public:
 		//Default model and texture of Sprite2D is Texture
 		Sprite2D(const std::string&, const std::string& model = "Texture", const std::string& shader = "Texture");
@@ -55,6 +56,7 @@ namespace EngineCore
 		void Init();
 		virtual void Draw();
 		virtual void Update(float deltaTime){}
+		bool isMoveWithCam;
 	};
 
 }

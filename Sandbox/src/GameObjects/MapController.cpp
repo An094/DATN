@@ -120,29 +120,28 @@ void MapController::Draw()
 
 void MapController::Update(float deltaTime)
 {
+	m_Player->Update(deltaTime);
+
 	std::shared_ptr<EngineCore::OrthographicCamera> cam = EngineCore::Application::GetInstance()->GetCamera();
-	if (m_KeyPressed == GLFW_KEY_W)
+	/*if (m_KeyPressed == GLFW_KEY_W)
 	{
-		m_Player->MoveUp(deltaTime);
 		cam->MoveUp(deltaTime);
 	}
 	else if (m_KeyPressed == GLFW_KEY_D)
 	{
-		m_Player->MoveRight(deltaTime);
 		cam->MoveRight(deltaTime);
 	}
 	else if (m_KeyPressed == GLFW_KEY_S)
 	{
-		m_Player->MoveDown(deltaTime);
 		cam->MoveDown(deltaTime);
 	}
 	else if (m_KeyPressed == GLFW_KEY_A)
 	{
-		m_Player->MoveLeft(deltaTime);
 		cam->MoveLeft(deltaTime);
 	}
-	m_KeyPressed = 0;
-	m_Player->Update(deltaTime);
+	m_KeyPressed = 0;*/
+
+	cam->Update(deltaTime);
 
 	for (auto it : m_ListEnemies)
 	{
@@ -152,12 +151,15 @@ void MapController::Update(float deltaTime)
 		}
 		it->Update(deltaTime);
 	}
+
 }
 
 void MapController::HandleKeyEvent(int key, bool isPressed)
 {
 	m_Player->HandleKeyEvents(key, isPressed);
 	//Camera
+	std::shared_ptr<EngineCore::OrthographicCamera> cam = EngineCore::Application::GetInstance()->GetCamera();
+	cam->HandleKeyEvents(key, isPressed);
 	m_KeyPressed = key;
 }
 
