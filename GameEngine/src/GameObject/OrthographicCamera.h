@@ -37,6 +37,12 @@ namespace EngineCore
 		void MoveDown(float);
 		void MoveLeft(float);
 		void MoveRight(float);
+
+		bool CanMoveUp;
+		bool CanMoveDown;
+		bool CanMoveLeft;
+		bool CanMoveRight;
+		bool CanMove;
 	private:
 		void RecalculateViewMatrix();
 		glm::mat4 m_ProjectionMatrix;

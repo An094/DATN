@@ -16,6 +16,8 @@ public:
 	void Draw();
 	void HandleKeyEvents(int key, bool bIsPressed);
 
+	void Die();
+
 	void MoveUp(float);
 	void MoveRight(float);
 	void MoveDown(float);

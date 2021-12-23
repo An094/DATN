@@ -4,6 +4,7 @@ namespace EngineCore
 {
 	OrthographicCamera::OrthographicCamera(float left, float right, float bottom, float top)
 		: m_ProjectionMatrix(glm::ortho(left, right, bottom, top, -1.0f, 1.0f)), m_ViewMatrix(glm::mat4(1.0f)), KEY(0)
+		, CanMoveUp(true), CanMoveRight(true), CanMoveLeft(true), CanMoveDown(true)
 	{
 		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
@@ -71,19 +72,19 @@ namespace EngineCore
 
 	void OrthographicCamera::Update(float deltaTime)
 	{
-		if (KEY == GLFW_KEY_W)
+		if (KEY == GLFW_KEY_W && CanMoveUp && CanMove)
 		{
 			MoveUp(deltaTime);
 		}
-		else if (KEY == GLFW_KEY_D)
+		else if (KEY == GLFW_KEY_D && CanMoveRight && CanMove)
 		{
 			MoveRight(deltaTime);
 		}
-		else if (KEY == GLFW_KEY_S)
+		else if (KEY == GLFW_KEY_S && CanMoveDown && CanMove)
 		{
 			MoveDown(deltaTime);
 		}
-		else if (KEY == GLFW_KEY_A)
+		else if (KEY == GLFW_KEY_A && CanMoveLeft && CanMove)
 		{
 			MoveLeft(deltaTime);
 		}

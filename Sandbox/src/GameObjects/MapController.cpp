@@ -106,7 +106,21 @@ MapController::MapController(int level)
 		}
 	}
 
+	int numberGolds = iDataFileArray[it++];
+	remainingGold = numberGolds;
+	if (numberEnemies == 0) return;
+	for (int i = 0; i < numberGolds; i++)
+	{
+		std::shared_ptr<Gold> tmpGold = std::make_shared<Gold>();
+		int x = iDataFileArray[it++];
+		int y = iDataFileArray[it++];
 
+		int distaneToPlayerX = (x - m_PlayerData.StartPoint.x) * TILEMAP_SIZE + widthScreen / 2;
+		int distaneToPlayerY = (y - m_PlayerData.StartPoint.y) * TILEMAP_SIZE + heightScreen / 2;
+		tmpGold->SetPosition(distaneToPlayerX, distaneToPlayerY);
+		tmpGold->SetSize(36);
+		m_ListGolds.push_back(tmpGold);
+	}
 
 }
 
@@ -142,20 +156,26 @@ void MapController::Draw()
 	{
 		it->Draw();
 	}
+	for (auto it : m_ListGolds)
+	{
+		it->Draw();
+	}
 }
 
 void MapController::Update(float deltaTime)
 {
+	std::shared_ptr<EngineCore::OrthographicCamera> cam = EngineCore::Application::GetInstance()->GetCamera();
 	std::shared_ptr<TileMap> colliderTileMap;
 	//
 	int collider = CheckCollisionWithWall(colliderTileMap);
-	
+
 	glm::vec2 playerPosition = m_Player->GetPosition();
 	if ((collider == 6) || (collider == 1))
 	{
 		if (playerPosition.x > colliderTileMap->xPos)
 		{
 			m_Player->CanLeft = false;
+			cam->CanMoveLeft = false;
 		}
 	}
 	if ((collider == 5) || (collider == 10))
@@ -163,6 +183,7 @@ void MapController::Update(float deltaTime)
 		if (playerPosition.x < colliderTileMap->xPos)
 		{
 			m_Player->CanRight = false;
+			cam->CanMoveRight = false;
 		}
 	}
 	if ((collider == 1) || (collider == 5))
@@ -170,6 +191,7 @@ void MapController::Update(float deltaTime)
 		if (playerPosition.y > colliderTileMap->yPos)
 		{
 			m_Player->CanUp = false;
+			cam->CanMoveUp = false;
 		}
 	}
 	if ((collider == 6) || (collider == 10))
@@ -177,23 +199,28 @@ void MapController::Update(float deltaTime)
 		if (playerPosition.y < colliderTileMap->yPos)
 		{
 			m_Player->CanDown = false;
+			cam->CanMoveDown = false;
 		}
 	}
 	if ((collider == 3) || (collider == 28) || (collider == 29))
 	{
 		m_Player->CanUp = false;
+		cam->CanMoveUp = false;
 	}
 	if ((collider == 8) || (collider == 30) || (collider == 31))
 	{
 		m_Player->CanDown = false;
+		cam->CanMoveDown = false;
 	}
 	if ((collider == 11) || (collider == 32) || (collider == 33))
 	{
 		m_Player->CanLeft = false;
+		cam->CanMoveLeft = false;
 	}
 	if ((collider == 12) || (collider == 34) || (collider == 35))
 	{
 		m_Player->CanRight = false;
+		cam->CanMoveRight = false;
 	}
 	m_Player->Update(deltaTime);
 
@@ -201,19 +228,31 @@ void MapController::Update(float deltaTime)
 	m_Player->CanRight = true;
 	m_Player->CanDown = true;
 	m_Player->CanLeft = true;
-	std::shared_ptr<EngineCore::OrthographicCamera> cam = EngineCore::Application::GetInstance()->GetCamera();
 
-	//cam->Update(deltaTime);
+	cam->Update(deltaTime);
 
+	cam->CanMoveUp = true;
+	cam->CanMoveRight = true;
+	cam->CanMoveDown = true;
+	cam->CanMoveLeft = true;
+
+	CheckCollectGold();
+	WinGame();
 	for (auto it : m_ListEnemies)
 	{
 		if (CheckCollision(m_Player, it))
 		{
+			m_Player->Die();
+			cam->CanMove = false;
 			//CLIENT_INFO("COLLISION OCCUR");
 		}
 		it->Update(deltaTime);
 	}
 
+	for (auto it : m_ListGolds)
+	{
+		it->Update(deltaTime);
+	}
 }
 
 void MapController::HandleKeyEvent(int key, bool isPressed)
@@ -227,7 +266,7 @@ void MapController::HandleKeyEvent(int key, bool isPressed)
 
 bool MapController::CheckCollision(std::shared_ptr<DynamicObject> obj1, std::shared_ptr<DynamicObject> obj2)
 {
-	int deltaCollision = 20;
+	int deltaCollision = 35;
 	glm::vec2 pos1 = obj1->GetPosition();
 	glm::vec2 pos2 = obj2->GetPosition();
 
@@ -279,10 +318,60 @@ int MapController::CheckCollisionWithWall(std::shared_ptr<TileMap>& tile)
 			{
 				//std::cout << "COLLISION: " << it->point.x << it->point.y << std::endl;
 				tile = it;
-				std::cout << it->ID << std::endl;
+				//std::cout << it->ID << std::endl;
 				return it->ID;
 			}
 		}
 	}
 	return 0;
+}
+
+void MapController::CheckCollectGold()
+{
+	int topPlayer = m_Player->GetPosition().y - 15;
+	int botPlayer = topPlayer + 30;
+	int leftPlayer = m_Player->GetPosition().x - 15;
+	int rightPlayer = leftPlayer + 30;
+	for (auto it : m_ListGolds)
+	{
+		if (!it->isActive) continue;
+		int topGold = it->GetPosition().y - 10;
+		int botGold = topGold + 20;
+		int leftGold = it->GetPosition().x - 10;
+		int rightGold = leftGold + 20;
+
+		if (topPlayer > botGold || botPlayer < topGold || leftPlayer > rightGold || rightPlayer < leftGold)
+		{
+			continue;
+		}
+		else
+		{
+			it->Disable();
+			remainingGold--;
+		}
+	}
+}
+
+bool MapController::WinGame()
+{
+	if (remainingGold != 0)
+	{
+		return false;
+	}
+
+	int playerXPosition = m_Player->GetPosition().x;
+	int playerYPosition = m_Player->GetPosition().y;
+
+	int topEndPoint = (m_PlayerData.EndPoint.y - m_PlayerData.StartPoint.y) * TILEMAP_SIZE + heightScreen / 2 - TILEMAP_SIZE / 2;
+	int botEndPoint = topEndPoint + TILEMAP_SIZE;
+	int leftEndPoint = (m_PlayerData.EndPoint.x - m_PlayerData.StartPoint.x) * TILEMAP_SIZE + widthScreen / 2 - TILEMAP_SIZE / 2;
+	int rightEndPoint = leftEndPoint + TILEMAP_SIZE;
+
+	if ((playerYPosition > topEndPoint) && (playerYPosition < botEndPoint) && (playerXPosition > leftEndPoint) && (playerXPosition <rightEndPoint))
+	{
+		CLIENT_INFO("WIN GAME");
+		return true;
+	}
+
+
 }

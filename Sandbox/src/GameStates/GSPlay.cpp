@@ -16,7 +16,7 @@ GSPlay::~GSPlay()
 
 void GSPlay::Init()
 {
-	m_MapController = std::make_shared<MapController>(1);
+	m_MapController = std::make_shared<MapController>(2);
 	m_Background = std::make_shared<EngineCore::Sprite2D>("Tile/-1.tga");
 	m_Background->SetSize(widthScreen * 3, heightScreen * 3);
 	m_Background->SetPosition(widthScreen / 2, heightScreen / 2);

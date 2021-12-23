@@ -4,6 +4,7 @@
 #include "DynamicObject.h"
 #include "Enemy.h"
 #include "Player.h"
+#include "Gold.h"
 #define TILEMAP_SIZE 48
 
 typedef struct Point 
@@ -40,14 +41,18 @@ public:
 	std::shared_ptr<Player> GetPlayer() { return m_Player; }
 	bool CheckCollision(std::shared_ptr<DynamicObject> obj1, std::shared_ptr<DynamicObject> obj2);
 	int CheckCollisionWithWall(std::shared_ptr<TileMap>& tileMap);
+	void CheckCollectGold();
+	bool WinGame();
 private:
 	int m_Level;
 	std::vector<std::shared_ptr<TileMap>> m_ListTileMap;
 	DynamicObjectData m_PlayerData;
 	std::shared_ptr<Player> m_Player;
 	std::vector<std::shared_ptr<Enemy>> m_ListEnemies;
+	std::vector<std::shared_ptr<Gold>> m_ListGolds;
 	int m_KeyPressed;
 	int** TileMapMatrix;
 	int length, height;
+	int remainingGold;
 };
 
