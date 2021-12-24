@@ -24,6 +24,5 @@ public:
 	void HandleTouchEvents(int x, int y, bool bIsPressed);
 private:
 	std::shared_ptr<EngineCore::Sprite2D> m_Background;
-	std::shared_ptr<EngineCore::Button> m_button;
 	std::shared_ptr<MapController> m_MapController;
 };

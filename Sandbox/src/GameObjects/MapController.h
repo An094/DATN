@@ -5,6 +5,7 @@
 #include "Enemy.h"
 #include "Player.h"
 #include "Gold.h"
+#include "GameObject/Button.h"
 #define TILEMAP_SIZE 48
 
 typedef struct Point 
@@ -37,6 +38,7 @@ public:
 	void Update(float deltaTime);
 	void Draw();
 	void HandleKeyEvent(int key, bool isPressed);
+	void HandleTouchEvents(int x, int y, bool isPressed);
 	DynamicObjectData GetPlayerData();
 	std::shared_ptr<Player> GetPlayer() { return m_Player; }
 	bool CheckCollision(std::shared_ptr<DynamicObject> obj1, std::shared_ptr<DynamicObject> obj2);
@@ -54,5 +56,19 @@ private:
 	int** TileMapMatrix;
 	int length, height;
 	int remainingGold;
+	std::shared_ptr<EngineCore::Sprite2D> m_Canvas;
+	std::shared_ptr<EngineCore::Sprite2D> m_StageSprite;
+	std::shared_ptr<EngineCore::Sprite2D> m_DeathSprite;
+	std::shared_ptr<EngineCore::Sprite2D> m_D0;
+	std::shared_ptr<EngineCore::Sprite2D> m_D1;
+	std::shared_ptr<EngineCore::Sprite2D> m_S0;
+	std::shared_ptr<EngineCore::Sprite2D> m_S1;
+	std::shared_ptr<EngineCore::Button> m_BackButton;
+	std::shared_ptr<EngineCore::Button> m_PauseButton;
+	std::shared_ptr<EngineCore::Button> m_PlayButton;
+	std::shared_ptr<EngineCore::Button> m_ButtonPausePlay;
+	std::shared_ptr<EngineCore::Sprite2D> m_Switch;
+	int numberDeaths;
+	bool isInIntro;
+	float timeStopSwitch;
 };
-

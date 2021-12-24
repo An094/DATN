@@ -2,14 +2,18 @@
 #include "GameEngine.h"
 #include "Application.h"
 #include "GameObject/OrthographicCamera.h"
+#include "GameManager/ResourceManager.h"
 #include "Soldier.h"
 #include <fstream>
 
 extern GLint widthScreen;
 extern GLint heightScreen;
 
-MapController::MapController(int level)
+bool isPause;
+
+MapController::MapController(int level):numberDeaths(0), isInIntro(true), timeStopSwitch(0.0f)
 {
+	isPause = false;
 	m_Level = level;
 	std::string pathMapFile = "../Data/Maps/0" + std::to_string(level) + ".txt";
 	std::fstream input(pathMapFile);
@@ -100,7 +104,7 @@ MapController::MapController(int level)
 
 			std::shared_ptr<Soldier> tmpSoldier = std::make_shared<Soldier>(static_cast<DIRECTION>(direction), maxDistance, 100.0f);
 			tmpSoldier->SetPosition(distaneToPlayerX, distaneToPlayerY);
-			tmpSoldier->SetSize(60, 60);
+			tmpSoldier->SetSize(50, 60);
 
 			m_ListEnemies.push_back(tmpSoldier);
 		}
@@ -121,7 +125,77 @@ MapController::MapController(int level)
 		tmpGold->SetSize(36);
 		m_ListGolds.push_back(tmpGold);
 	}
+	EngineCore::Application::GetInstance()->GetCamera()->CanMove = true;
 
+	//
+	m_Canvas = std::make_shared<EngineCore::Sprite2D>("Menu/Gray.tga");
+	m_Canvas->SetPosition(widthScreen / 2, 60);
+	m_Canvas->SetSize(widthScreen, 60);
+	m_Canvas->isMoveWithCam = false;
+
+	m_BackButton = std::make_shared<EngineCore::Button>("back_play.tga", "Texture", "Texture", EngineCore::ButtonType::CIRCLE);
+	m_BackButton->SetPosition(40, 60);
+	m_BackButton->SetSize(50, 50);
+	m_BackButton->SetOnClick([]()
+		{
+			(EngineCore::Application::GetInstance()->GetCamera())->ResetMatrix();
+			EngineCore::GameStateMachine::GetInstance()->PopState();
+		});
+
+	m_PauseButton = std::make_shared<EngineCore::Button>("pause.tga", "Texture", "Texture", EngineCore::ButtonType::CIRCLE);
+	m_PauseButton->SetPosition(560, 60);
+	m_PauseButton->SetSize(50, 50);
+	m_PauseButton->SetOnClick([]() 
+		{
+			isPause = true;
+		});
+
+	m_PlayButton = std::make_shared<EngineCore::Button>("play.tga", "Texture", "Texture", EngineCore::ButtonType::CIRCLE);
+	m_PlayButton->SetPosition(560, 60);
+	m_PlayButton->SetSize(50, 50);
+	m_PlayButton->SetOnClick([]()
+		{
+			isPause = false;
+		});
+
+	m_ButtonPausePlay = m_PauseButton;
+
+	m_StageSprite = std::make_shared<EngineCore::Sprite2D>("Menu/Stage.tga");
+	m_StageSprite->SetPosition(150, 60);
+	m_StageSprite->SetSize(100, 40);
+	m_StageSprite->isMoveWithCam = false;
+	
+	m_DeathSprite = std::make_shared<EngineCore::Sprite2D>("Menu/Deaths.tga");
+	m_DeathSprite->SetPosition(400, 60);
+	m_DeathSprite->SetSize(100, 40);
+	m_DeathSprite->isMoveWithCam = false;
+
+	int unit, tens;
+	tens = level / 10;
+	unit = level % 10;
+
+	m_S0 = std::make_shared<EngineCore::Sprite2D>("Num/B" + std::to_string(tens) + ".tga");
+	m_S0->SetPosition(220, 60);
+	m_S0->SetSize(20, 40);
+	m_S0->isMoveWithCam = false;
+	m_S1 = std::make_shared<EngineCore::Sprite2D>("Num/B" + std::to_string(unit) + ".tga");
+	m_S1->SetPosition(240, 60);
+	m_S1->SetSize(20, 40);
+	m_S1->isMoveWithCam = false;
+
+	m_D0 = std::make_shared<EngineCore::Sprite2D>("Num/B0.tga");
+	m_D0->SetPosition(470, 60);
+	m_D0->SetSize(20, 40);
+	m_D0->isMoveWithCam = false;
+	m_D1 = std::make_shared<EngineCore::Sprite2D>("Num/B0.tga");
+	m_D1->SetPosition(490, 60);
+	m_D1->SetSize(20, 40);
+	m_D1->isMoveWithCam = false;
+
+	m_Switch = std::make_shared<EngineCore::Sprite2D>("Menu/Switch.tga");
+	m_Switch->SetSize(widthScreen, heightScreen);
+	m_Switch->SetPosition(0, heightScreen / 2);
+	m_Switch->isMoveWithCam = false;
 }
 
 MapController::~MapController()
@@ -160,10 +234,56 @@ void MapController::Draw()
 	{
 		it->Draw();
 	}
+	m_Canvas->Draw();
+	m_BackButton->Draw();
+	m_ButtonPausePlay->Draw();
+	m_StageSprite->Draw();
+	m_DeathSprite->Draw();
+	m_S0->Draw();
+	m_S1->Draw();
+	m_D0->Draw();
+	m_D1->Draw();
+	m_Switch->Draw();
 }
 
 void MapController::Update(float deltaTime)
 {
+	if (isInIntro)
+	{
+		glm::vec2 pos = m_Switch->GetPosition();
+		int distanceSwitchAndCenter = widthScreen / 2 - pos.x;
+		if (distanceSwitchAndCenter > 10.0f)
+		{
+			pos.x += 500.0f * deltaTime;
+			m_Switch->SetPosition(pos);
+		}
+		else if (distanceSwitchAndCenter <= -widthScreen)
+		{
+			isInIntro = false;
+		}
+		else
+		{
+			if (timeStopSwitch < 1.0f)
+			{
+				m_Switch->SetPosition(widthScreen / 2, heightScreen / 2);
+				timeStopSwitch += deltaTime;
+			}
+			else
+			{
+				pos.x += 500.0f * deltaTime;
+				m_Switch->SetPosition(pos);
+			}
+		}
+		return;
+	}
+
+	if (isPause)
+	{
+		m_ButtonPausePlay = m_PlayButton;
+		return;
+	}
+	m_ButtonPausePlay = m_PauseButton;
+
 	std::shared_ptr<EngineCore::OrthographicCamera> cam = EngineCore::Application::GetInstance()->GetCamera();
 	std::shared_ptr<TileMap> colliderTileMap;
 	//
@@ -240,11 +360,20 @@ void MapController::Update(float deltaTime)
 	WinGame();
 	for (auto it : m_ListEnemies)
 	{
-		if (CheckCollision(m_Player, it))
+		if (CheckCollision(m_Player, it) && m_Player->IsAlive())
 		{
 			m_Player->Die();
 			cam->CanMove = false;
-			//CLIENT_INFO("COLLISION OCCUR");
+			numberDeaths++;
+			
+			int tens, unit;
+			tens = numberDeaths / 10;
+			unit = numberDeaths % 10;
+
+			m_D0->ChangeTexture(EngineCore::ResourceManager::GetInstance()->GetTexture("Num/B" + std::to_string(tens) + ".tga"));
+			m_D1->ChangeTexture(EngineCore::ResourceManager::GetInstance()->GetTexture("Num/B" + std::to_string(unit) + ".tga"));
+
+			break;
 		}
 		it->Update(deltaTime);
 	}
@@ -253,6 +382,7 @@ void MapController::Update(float deltaTime)
 	{
 		it->Update(deltaTime);
 	}
+
 }
 
 void MapController::HandleKeyEvent(int key, bool isPressed)
@@ -262,6 +392,12 @@ void MapController::HandleKeyEvent(int key, bool isPressed)
 	std::shared_ptr<EngineCore::OrthographicCamera> cam = EngineCore::Application::GetInstance()->GetCamera();
 	cam->HandleKeyEvents(key, isPressed);
 	m_KeyPressed = key;
+}
+
+void MapController::HandleTouchEvents(int x, int y, bool isPressed)
+{
+	m_BackButton->HandleTouchEvent(x, y, isPressed);
+	m_ButtonPausePlay->HandleTouchEvent(x, y, isPressed);
 }
 
 bool MapController::CheckCollision(std::shared_ptr<DynamicObject> obj1, std::shared_ptr<DynamicObject> obj2)
