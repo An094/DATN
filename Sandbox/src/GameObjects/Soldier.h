@@ -8,7 +8,6 @@ public:
 	Soldier(DIRECTION dir, float maxD, float speed);
 	void Update(float deltaTime) override;
 	void Draw() override;
-	void HandleKeyEvents(int key, bool isPressed) override;
 private:
 	float m_MaxDistance;
 	std::vector<std::shared_ptr<EngineCore::Texture>> m_ListTexture;

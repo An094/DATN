@@ -19,7 +19,7 @@ void GSPlay::Init()
 	m_Level = 1;
 	m_MapController = std::make_shared<MapController>(m_Level);
 	m_Background = std::make_shared<EngineCore::Sprite2D>("Tile/-1.tga");
-	m_Background->SetSize(widthScreen * 3, heightScreen * 3);
+	m_Background->SetSize(widthScreen * 5, heightScreen * 5);
 	m_Background->SetPosition(widthScreen / 2, heightScreen / 2);
 
 	//m_text = std::make_shared<EngineCore::Text>("arial.ttf", "Hello", 100, glm::vec3(1.0f, 0.0f, 1.0f));

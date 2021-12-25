@@ -52,7 +52,7 @@ namespace EngineCore
 		glm::vec3 m_Position = { 0.0f, 0.0f, 0.0f };
 		float m_Rotation = 0.0f;
 		float m_CameraRotation = 0.0f; //In degrees, in the anti-clockwise direction
-		float m_CameraHorizontalTranslationSpeed = 0.33333f;
+		float m_CameraHorizontalTranslationSpeed = 0.5;
 		float m_CameraVerticalTranslationSpeed = 0.25;
 		int KEY;
 	};

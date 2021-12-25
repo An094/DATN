@@ -3,6 +3,7 @@
 #include "Application.h"
 #include "GameManager/ResourceManager.h"
 #include "Soldier.h"
+#include "Trap.h"
 #include <fstream>
 
 extern GLint widthScreen;
@@ -107,9 +108,27 @@ MapController::MapController(int level):numberDeaths(0), isInIntro(true), timeSt
 
 			m_ListEnemies.push_back(tmpSoldier);
 		}
+		else if (type == 3)
+		{
+			int startX = iDataFileArray[it++];
+			int startY = iDataFileArray[it++];
+			int state = iDataFileArray[it++];
+			int current = iDataFileArray[it++];
+			int timestate0 = iDataFileArray[it++];
+			int timestate1 = iDataFileArray[it++];
+
+			int distaneToPlayerX = (startX - m_PlayerData.StartPoint.x) * TILEMAP_SIZE + widthScreen / 2;
+			int distaneToPlayerY = (startY - m_PlayerData.StartPoint.y) * TILEMAP_SIZE + heightScreen / 2;
+
+			std::shared_ptr<Trap> tmpTrap = std::make_shared<Trap>(state, current, timestate0, timestate1);
+			tmpTrap->SetPosition(distaneToPlayerX, distaneToPlayerY);
+			tmpTrap->SetSize(30, 50);
+
+			m_ListEnemies.push_back(tmpTrap);
+		}
 	}
 
-	int numberGolds = iDataFileArray[it++];
+	numberGolds = iDataFileArray[it++];
 	remainingGold = numberGolds;
 	if (numberEnemies == 0) return;
 	for (int i = 0; i < numberGolds; i++)
@@ -225,7 +244,7 @@ void MapController::DrawMap()
 void MapController::Draw()
 {
 	DrawMap();
-	m_Player->Draw();
+	
 
 	for (auto it : m_ListEnemies)
 	{
@@ -235,6 +254,9 @@ void MapController::Draw()
 	{
 		it->Draw();
 	}
+
+	m_Player->Draw();
+
 	m_Canvas->Draw();
 	m_BackButton->Draw();
 	m_ButtonPausePlay->Draw();
@@ -290,7 +312,7 @@ void MapController::Update(float deltaTime)
 	int collider = CheckCollisionWithWall(colliderTileMap);
 
 	glm::vec2 playerPosition = m_Player->GetPosition();
-	if ((collider == 6) || (collider == 1))
+	if ((collider == 6) || (collider == 1) || (collider == 2))
 	{
 		if (playerPosition.x > colliderTileMap->xPos)
 		{
@@ -298,7 +320,7 @@ void MapController::Update(float deltaTime)
 			m_Camera->CanMoveLeft = false;
 		}
 	}
-	if ((collider == 5) || (collider == 10))
+	if ((collider == 5) || (collider == 10) || (collider == 4))
 	{
 		if (playerPosition.x < colliderTileMap->xPos)
 		{
@@ -306,7 +328,7 @@ void MapController::Update(float deltaTime)
 			m_Camera->CanMoveRight = false;
 		}
 	}
-	if ((collider == 1) || (collider == 5))
+	if ((collider == 1) || (collider == 5) || (collider == 2) || (collider == 4))
 	{
 		if (playerPosition.y > colliderTileMap->yPos)
 		{
@@ -360,7 +382,7 @@ void MapController::Update(float deltaTime)
 	WinGame();
 	for (auto it : m_ListEnemies)
 	{
-		if (CheckCollision(m_Player, it) && m_Player->IsAlive())
+		if (CheckCollision(m_Player, it) && m_Player->IsAlive() && it->IsActivate())
 		{
 			m_Player->Die();
 			m_Camera->CanMove = false;
@@ -525,6 +547,8 @@ void MapController::ResetMap()
 {
 	m_Player->Reborn();
 	m_Camera->ResetMatrix();
+	m_Camera->CanMove = true;
+	remainingGold = numberGolds;
 	for (auto it : m_ListGolds)
 	{
 		it->isActive = true;

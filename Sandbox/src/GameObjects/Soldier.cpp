@@ -63,8 +63,3 @@ void Soldier::Draw()
 {
 	GetSprite()->Draw();
 }
-
-void Soldier::HandleKeyEvents(int key, bool isPress)
-{
-
-}
