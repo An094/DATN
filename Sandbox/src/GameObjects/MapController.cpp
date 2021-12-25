@@ -4,6 +4,7 @@
 #include "GameManager/ResourceManager.h"
 #include "Soldier.h"
 #include "Trap.h"
+#include "ThornCube.h"
 #include <fstream>
 
 extern GLint widthScreen;
@@ -107,6 +108,23 @@ MapController::MapController(int level):numberDeaths(0), isInIntro(true), timeSt
 			tmpSoldier->SetSize(50, 60);
 
 			m_ListEnemies.push_back(tmpSoldier);
+		}
+		else if (type == 2)
+		{
+			int startX = iDataFileArray[it++];
+			int startY = iDataFileArray[it++];
+			int direction = iDataFileArray[it++];
+			int maxDistance0 = iDataFileArray[it++] * TILEMAP_SIZE;
+			int maxDistance1 = iDataFileArray[it++] * TILEMAP_SIZE;
+
+			int distaneToPlayerX = (startX - m_PlayerData.StartPoint.x) * TILEMAP_SIZE + widthScreen / 2;
+			int distaneToPlayerY = (startY - m_PlayerData.StartPoint.y) * TILEMAP_SIZE + heightScreen / 2;
+
+			std::shared_ptr<ThornCube> tmpThornCube = std::make_shared<ThornCube>(static_cast<DIRECTION>(direction), maxDistance0, maxDistance1, 100.0f);
+			tmpThornCube->SetPosition(distaneToPlayerX, distaneToPlayerY);
+			tmpThornCube->SetSize(50, 60);
+
+			m_ListEnemies.push_back(tmpThornCube);
 		}
 		else if (type == 3)
 		{

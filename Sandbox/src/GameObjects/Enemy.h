@@ -4,7 +4,7 @@ enum class ENEMY_TYPE
 {
 	SOLDIER = 0,
 	TRAP,
-	RING
+	THORN_CUBE
 };
 class Enemy : public DynamicObject
 {
