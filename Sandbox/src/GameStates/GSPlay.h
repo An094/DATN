@@ -23,6 +23,7 @@ public:
 	void HandleKeyEvents(int key, bool bIsPressed);
 	void HandleTouchEvents(int x, int y, bool bIsPressed);
 private:
+	int m_Level;
 	std::shared_ptr<EngineCore::Sprite2D> m_Background;
 	std::shared_ptr<MapController> m_MapController;
 };

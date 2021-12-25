@@ -22,16 +22,16 @@ void Gold::SetSize(int size)
 
 void Gold::Draw()
 {
-	m_Sprite->Draw();
+	if(isActive) m_Sprite->Draw();
 }
 
 void Gold::Update(float deltaTime)
 {
-	m_Sprite->Update(deltaTime);
+	if(isActive) m_Sprite->Update(deltaTime);
 }
 
 void Gold::Disable()
 {
 	isActive = false;
-	m_Sprite->ChangeTexture("blank.tga");
+	//m_Sprite->ChangeTexture("blank.tga");
 }

@@ -1,7 +1,6 @@
 #include "MapController.h"
 #include "GameEngine.h"
 #include "Application.h"
-#include "GameObject/OrthographicCamera.h"
 #include "GameManager/ResourceManager.h"
 #include "Soldier.h"
 #include <fstream>
@@ -11,7 +10,7 @@ extern GLint heightScreen;
 
 bool isPause;
 
-MapController::MapController(int level):numberDeaths(0), isInIntro(true), timeStopSwitch(0.0f)
+MapController::MapController(int level):numberDeaths(0), isInIntro(true), timeStopSwitch(0.0f), timeDie(0.0f), isWinGame(false)
 {
 	isPause = false;
 	m_Level = level;
@@ -125,7 +124,9 @@ MapController::MapController(int level):numberDeaths(0), isInIntro(true), timeSt
 		tmpGold->SetSize(36);
 		m_ListGolds.push_back(tmpGold);
 	}
-	EngineCore::Application::GetInstance()->GetCamera()->CanMove = true;
+	m_Camera = EngineCore::Application::GetInstance()->GetCamera();
+	m_Camera->ResetMatrix();
+	m_Camera->CanMove = true;
 
 	//
 	m_Canvas = std::make_shared<EngineCore::Sprite2D>("Menu/Gray.tga");
@@ -284,7 +285,6 @@ void MapController::Update(float deltaTime)
 	}
 	m_ButtonPausePlay = m_PauseButton;
 
-	std::shared_ptr<EngineCore::OrthographicCamera> cam = EngineCore::Application::GetInstance()->GetCamera();
 	std::shared_ptr<TileMap> colliderTileMap;
 	//
 	int collider = CheckCollisionWithWall(colliderTileMap);
@@ -295,7 +295,7 @@ void MapController::Update(float deltaTime)
 		if (playerPosition.x > colliderTileMap->xPos)
 		{
 			m_Player->CanLeft = false;
-			cam->CanMoveLeft = false;
+			m_Camera->CanMoveLeft = false;
 		}
 	}
 	if ((collider == 5) || (collider == 10))
@@ -303,7 +303,7 @@ void MapController::Update(float deltaTime)
 		if (playerPosition.x < colliderTileMap->xPos)
 		{
 			m_Player->CanRight = false;
-			cam->CanMoveRight = false;
+			m_Camera->CanMoveRight = false;
 		}
 	}
 	if ((collider == 1) || (collider == 5))
@@ -311,7 +311,7 @@ void MapController::Update(float deltaTime)
 		if (playerPosition.y > colliderTileMap->yPos)
 		{
 			m_Player->CanUp = false;
-			cam->CanMoveUp = false;
+			m_Camera->CanMoveUp = false;
 		}
 	}
 	if ((collider == 6) || (collider == 10))
@@ -319,28 +319,28 @@ void MapController::Update(float deltaTime)
 		if (playerPosition.y < colliderTileMap->yPos)
 		{
 			m_Player->CanDown = false;
-			cam->CanMoveDown = false;
+			m_Camera->CanMoveDown = false;
 		}
 	}
 	if ((collider == 3) || (collider == 28) || (collider == 29))
 	{
 		m_Player->CanUp = false;
-		cam->CanMoveUp = false;
+		m_Camera->CanMoveUp = false;
 	}
 	if ((collider == 8) || (collider == 30) || (collider == 31))
 	{
 		m_Player->CanDown = false;
-		cam->CanMoveDown = false;
+		m_Camera->CanMoveDown = false;
 	}
 	if ((collider == 11) || (collider == 32) || (collider == 33))
 	{
 		m_Player->CanLeft = false;
-		cam->CanMoveLeft = false;
+		m_Camera->CanMoveLeft = false;
 	}
 	if ((collider == 12) || (collider == 34) || (collider == 35))
 	{
 		m_Player->CanRight = false;
-		cam->CanMoveRight = false;
+		m_Camera->CanMoveRight = false;
 	}
 	m_Player->Update(deltaTime);
 
@@ -349,12 +349,12 @@ void MapController::Update(float deltaTime)
 	m_Player->CanDown = true;
 	m_Player->CanLeft = true;
 
-	cam->Update(deltaTime);
+	m_Camera->Update(deltaTime);
 
-	cam->CanMoveUp = true;
-	cam->CanMoveRight = true;
-	cam->CanMoveDown = true;
-	cam->CanMoveLeft = true;
+	m_Camera->CanMoveUp = true;
+	m_Camera->CanMoveRight = true;
+	m_Camera->CanMoveDown = true;
+	m_Camera->CanMoveLeft = true;
 
 	CheckCollectGold();
 	WinGame();
@@ -363,7 +363,7 @@ void MapController::Update(float deltaTime)
 		if (CheckCollision(m_Player, it) && m_Player->IsAlive())
 		{
 			m_Player->Die();
-			cam->CanMove = false;
+			m_Camera->CanMove = false;
 			numberDeaths++;
 			
 			int tens, unit;
@@ -378,6 +378,15 @@ void MapController::Update(float deltaTime)
 		it->Update(deltaTime);
 	}
 
+	if (!m_Player->IsAlive())
+	{
+		timeDie += deltaTime;
+		if (timeDie >= 0.6f)
+		{
+			ResetMap();
+		}
+	}
+
 	for (auto it : m_ListGolds)
 	{
 		it->Update(deltaTime);
@@ -389,8 +398,7 @@ void MapController::HandleKeyEvent(int key, bool isPressed)
 {
 	m_Player->HandleKeyEvents(key, isPressed);
 	//Camera
-	std::shared_ptr<EngineCore::OrthographicCamera> cam = EngineCore::Application::GetInstance()->GetCamera();
-	cam->HandleKeyEvents(key, isPressed);
+	m_Camera->HandleKeyEvents(key, isPressed);
 	m_KeyPressed = key;
 }
 
@@ -505,9 +513,21 @@ bool MapController::WinGame()
 
 	if ((playerYPosition > topEndPoint) && (playerYPosition < botEndPoint) && (playerXPosition > leftEndPoint) && (playerXPosition <rightEndPoint))
 	{
-		CLIENT_INFO("WIN GAME");
+		//CLIENT_INFO("WIN GAME");
+		isWinGame = true;
 		return true;
 	}
 
 
+}
+
+void MapController::ResetMap()
+{
+	m_Player->Reborn();
+	m_Camera->ResetMatrix();
+	for (auto it : m_ListGolds)
+	{
+		it->isActive = true;
+	}
+	timeDie = 0.0f;
 }

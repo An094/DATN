@@ -17,6 +17,7 @@ public:
 	void HandleKeyEvents(int key, bool bIsPressed);
 
 	void Die();
+	void Reborn();
 
 	void MoveUp(float);
 	void MoveRight(float);
@@ -33,5 +34,6 @@ private:
 	std::queue<int> m_QueueKeyEvent; //Use in future
 	float m_Speed;
 	int KEY;
+	DIRECTION m_DefaultDir;
 };
 

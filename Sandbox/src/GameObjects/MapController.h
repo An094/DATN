@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Gold.h"
 #include "GameObject/Button.h"
+#include "GameObject/OrthographicCamera.h"
 #define TILEMAP_SIZE 48
 
 typedef struct Point 
@@ -45,6 +46,8 @@ public:
 	int CheckCollisionWithWall(std::shared_ptr<TileMap>& tileMap);
 	void CheckCollectGold();
 	bool WinGame();
+	void ResetMap();
+	bool isWinGame;
 private:
 	int m_Level;
 	std::vector<std::shared_ptr<TileMap>> m_ListTileMap;
@@ -52,6 +55,7 @@ private:
 	std::shared_ptr<Player> m_Player;
 	std::vector<std::shared_ptr<Enemy>> m_ListEnemies;
 	std::vector<std::shared_ptr<Gold>> m_ListGolds;
+	std::shared_ptr<EngineCore::OrthographicCamera> m_Camera;
 	int m_KeyPressed;
 	int** TileMapMatrix;
 	int length, height;
@@ -71,4 +75,5 @@ private:
 	int numberDeaths;
 	bool isInIntro;
 	float timeStopSwitch;
+	float timeDie;
 };

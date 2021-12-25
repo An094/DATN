@@ -2,7 +2,7 @@
 #include "GameManager/ResourceManager.h"
 extern GLint widthScreen;
 extern GLint heightScreen;
-Player::Player(DIRECTION dir) : DynamicObject(dir, 150.f) , isAlive(true), KEY(0), CanUp(true), CanRight(true), CanDown(true), CanLeft(true)
+Player::Player(DIRECTION dir) : DynamicObject(dir, 150.f) , isAlive(true), KEY(0), CanUp(true), CanRight(true), CanDown(true), CanLeft(true), m_DefaultDir(dir)
 {
 	std::shared_ptr<EngineCore::Texture> tmpTexture = EngineCore::ResourceManager::GetInstance()->GetTexture("Poo/poo_up.tga");
 	m_ListTexture.push_back(tmpTexture);
@@ -100,4 +100,11 @@ void Player::Die()
 {
 	SetCurrentTexture(EngineCore::ResourceManager::GetInstance()->GetTexture("Poo/poo_dead.tga"));
 	isAlive = false;
+}
+
+void Player::Reborn()
+{
+	isAlive = true;
+	SetCurrentTexture(m_ListTexture[static_cast<int>(m_DefaultDir)]);
+	SetPosition(widthScreen / 2, heightScreen / 2);
 }
