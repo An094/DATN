@@ -2,6 +2,7 @@
 #include "GameManager/ResourceManager.h"
 extern GLint widthScreen;
 extern GLint heightScreen;
+extern int avatar;
 Player::Player(DIRECTION dir) : DynamicObject(dir, 150.f) , isAlive(true), KEY(0), CanUp(true), CanRight(true), CanDown(true), CanLeft(true), m_DefaultDir(dir)
 {
 	std::shared_ptr<EngineCore::Texture> tmpTexture = EngineCore::ResourceManager::GetInstance()->GetTexture("Poo/poo_up.tga");
@@ -12,9 +13,17 @@ Player::Player(DIRECTION dir) : DynamicObject(dir, 150.f) , isAlive(true), KEY(0
 	m_ListTexture.push_back(tmpTexture);
 	tmpTexture = EngineCore::ResourceManager::GetInstance()->GetTexture("Poo/poo_left.tga");
 	m_ListTexture.push_back(tmpTexture);
+	tmpTexture = EngineCore::ResourceManager::GetInstance()->GetTexture("Poo/poo1_up.tga");
+	m_ListTexture.push_back(tmpTexture);
+	tmpTexture = EngineCore::ResourceManager::GetInstance()->GetTexture("Poo/poo1_right.tga");
+	m_ListTexture.push_back(tmpTexture);
+	tmpTexture = EngineCore::ResourceManager::GetInstance()->GetTexture("Poo/poo1_down.tga");
+	m_ListTexture.push_back(tmpTexture);
+	tmpTexture = EngineCore::ResourceManager::GetInstance()->GetTexture("Poo/poo1_left.tga");
+	m_ListTexture.push_back(tmpTexture);
 
 	SetSprite(std::make_shared<EngineCore::SpriteAnimation2D>("Poo/poo_up.tga", "Texture", "Animation", 6, 0.1f));
-	SetCurrentTexture(m_ListTexture[static_cast<int>(GetDirection())]);
+	SetCurrentTexture(m_ListTexture[static_cast<int>(GetDirection()) + 4*avatar]);
 	SetSize(70, 70);
 	SetPosition(widthScreen / 2, heightScreen / 2);
 }
@@ -26,25 +35,25 @@ void Player::Update(float deltaTime)
 	if (KEY == GLFW_KEY_W && CanUp && isAlive)
 	{
 		SetDirection(DIRECTION::UP);
-		SetCurrentTexture(m_ListTexture[0]);
+		SetCurrentTexture(m_ListTexture[0 + 4 * avatar]);
 		MoveUp(deltaTime);
 	}
 	else if (KEY == GLFW_KEY_D && CanRight && isAlive)
 	{
 		SetDirection(DIRECTION::RIGHT);
-		SetCurrentTexture(m_ListTexture[1]);
+		SetCurrentTexture(m_ListTexture[1 + 4 * avatar]);
 		MoveRight(deltaTime);
 	}
 	else if (KEY == GLFW_KEY_S && CanDown && isAlive)
 	{
 		SetDirection(DIRECTION::DOWN);
-		SetCurrentTexture(m_ListTexture[2]);
+		SetCurrentTexture(m_ListTexture[2 + 4 * avatar]);
 		MoveDown(deltaTime);
 	}
 	else if (KEY == GLFW_KEY_A && CanLeft && isAlive)
 	{
 		SetDirection(DIRECTION::LEFT);
-		SetCurrentTexture(m_ListTexture[3]);
+		SetCurrentTexture(m_ListTexture[3 + 4 * avatar]);
 		MoveLeft(deltaTime);
 	}
 	GetSprite()->Update(deltaTime);
@@ -105,6 +114,6 @@ void Player::Die()
 void Player::Reborn()
 {
 	isAlive = true;
-	SetCurrentTexture(m_ListTexture[static_cast<int>(m_DefaultDir)]);
+	SetCurrentTexture(m_ListTexture[static_cast<int>(m_DefaultDir) + 4 * avatar]);
 	SetPosition(widthScreen / 2, heightScreen / 2);
 }

@@ -22,6 +22,7 @@ public:
 
 	void HandleKeyEvents(int key, bool bIsPressed);
 	void HandleTouchEvents(int x, int y, bool bIsPressed);
+	void SetLevel(int level) { m_Level = level; }
 private:
 	int m_Level;
 	std::shared_ptr<EngineCore::Sprite2D> m_Background;

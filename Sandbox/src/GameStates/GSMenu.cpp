@@ -26,7 +26,7 @@ void GSMenu::Init()
 	m_PlayButton->SetSize(300, 150);
 	m_PlayButton->SetOnClick([]()
 		{
-			EngineCore::GameStateMachine::GetInstance()->ChangeState(2);//GSPlay
+			EngineCore::GameStateMachine::GetInstance()->ChangeState(2);//GSCustom
 		});
 
 	//button setting
@@ -34,7 +34,7 @@ void GSMenu::Init()
 	m_SettingButton->SetPosition(widthScreen - 50, 650);
 	m_SettingButton->SetSize(50, 50);
 	m_SettingButton->SetOnClick([]() {
-			EngineCore::GameStateMachine::GetInstance()->ChangeState(3);//GSSetting
+			EngineCore::GameStateMachine::GetInstance()->ChangeState(4);//GSSetting
 		});
 
 	//button quit

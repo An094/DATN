@@ -4,6 +4,7 @@
 
 extern GLint widthScreen;
 extern GLint heightScreen;
+extern int level;
 GSPlay::GSPlay()
 {
 
@@ -16,7 +17,7 @@ GSPlay::~GSPlay()
 
 void GSPlay::Init()
 {
-	m_Level = 1;
+	m_Level = level;
 	m_MapController = std::make_shared<MapController>(m_Level);
 	m_Background = std::make_shared<EngineCore::Sprite2D>("Tile/-1.tga");
 	m_Background->SetSize(widthScreen * 5, heightScreen * 5);
