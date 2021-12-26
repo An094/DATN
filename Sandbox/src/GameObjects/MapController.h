@@ -72,7 +72,7 @@ private:
 	std::shared_ptr<EngineCore::Button> m_PlayButton;
 	std::shared_ptr<EngineCore::Button> m_ButtonPausePlay;
 	std::shared_ptr<EngineCore::Sprite2D> m_Switch;
-	int numberDeaths;
+	static int numberDeaths;
 	int numberGolds;
 	bool isInIntro;
 	float timeStopSwitch;

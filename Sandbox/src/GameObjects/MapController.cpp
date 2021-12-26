@@ -11,8 +11,9 @@ extern GLint widthScreen;
 extern GLint heightScreen;
 
 bool isPause;
+int MapController::numberDeaths = 0;
 
-MapController::MapController(int level):numberDeaths(0), isInIntro(true), timeStopSwitch(0.0f), timeDie(0.0f), isWinGame(false)
+MapController::MapController(int level): isInIntro(true), timeStopSwitch(0.0f), timeDie(0.0f), isWinGame(false)
 {
 	isPause = false;
 	m_Level = level;
@@ -221,11 +222,13 @@ MapController::MapController(int level):numberDeaths(0), isInIntro(true), timeSt
 	m_S1->SetSize(20, 40);
 	m_S1->isMoveWithCam = false;
 
-	m_D0 = std::make_shared<EngineCore::Sprite2D>("Num/B0.tga");
+	tens = numberDeaths / 10;
+	unit = numberDeaths % 10;
+	m_D0 = std::make_shared<EngineCore::Sprite2D>("Num/B" + std::to_string(tens) + ".tga");
 	m_D0->SetPosition(470, 60);
 	m_D0->SetSize(20, 40);
 	m_D0->isMoveWithCam = false;
-	m_D1 = std::make_shared<EngineCore::Sprite2D>("Num/B0.tga");
+	m_D1 = std::make_shared<EngineCore::Sprite2D>("Num/B" + std::to_string(unit) + ".tga");
 	m_D1->SetPosition(490, 60);
 	m_D1->SetSize(20, 40);
 	m_D1->isMoveWithCam = false;
