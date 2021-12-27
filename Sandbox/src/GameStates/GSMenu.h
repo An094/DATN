@@ -22,6 +22,7 @@ private:
 	std::shared_ptr<EngineCore::Sprite2D> m_Background;
 	std::shared_ptr<EngineCore::Sprite2D> m_Logo;
 	std::shared_ptr<EngineCore::Button> m_PlayButton;
+	std::shared_ptr<EngineCore::Button> m_CreditButton;
 	std::shared_ptr<EngineCore::Button> m_SettingButton;
 	std::shared_ptr<EngineCore::Button> m_QuitButton;
 

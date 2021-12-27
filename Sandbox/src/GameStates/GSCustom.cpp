@@ -35,7 +35,7 @@ void GSCustom::Init()
 
 	tmp = std::make_shared<EngineCore::SpriteAnimation2D>("Poo/poo1_down.tga", "Texture", "Animation", 4, 0.1f);
 	tmp->SetPosition(widthScreen / 2, 150);
-	tmp->SetSize(80, 80);
+	tmp->SetSize(50, 50);
 	m_ListPlayerAvatar.push_back(tmp);
 
 	m_PlayerAvatar = m_ListPlayerAvatar[0];

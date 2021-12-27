@@ -29,6 +29,14 @@ void GSMenu::Init()
 			EngineCore::GameStateMachine::GetInstance()->ChangeState(2);//GSCustom
 		});
 
+	//button credit
+	m_CreditButton = std::make_shared<EngineCore::Button>("Menu/button_credit.tga", "Texture", "Texture", EngineCore::ButtonType::CIRCLE);
+	m_CreditButton->SetPosition(widthScreen - 50, 575);
+	m_CreditButton->SetSize(50, 50);
+	m_CreditButton->SetOnClick([]() {
+		EngineCore::GameStateMachine::GetInstance()->ChangeState(5);//GSCredit
+		});
+
 	//button setting
 	m_SettingButton = std::make_shared<EngineCore::Button>("Menu/button_setting.tga", "Texture", "Texture", EngineCore::ButtonType::CIRCLE);
 	m_SettingButton->SetPosition(widthScreen - 50, 650);
@@ -73,6 +81,7 @@ void GSMenu::Draw()
 	m_Background->Draw();
 	m_Logo->Draw();
 	m_PlayButton->Draw();
+	m_CreditButton->Draw();
 	m_SettingButton->Draw();
 	m_QuitButton->Draw();
 }
@@ -95,6 +104,7 @@ void GSMenu::HandleKeyEvents(int key, bool bIsPressed)
 void GSMenu::HandleTouchEvents(int x, int y, bool bIsPressed)
 {
 	m_PlayButton->HandleTouchEvent(x, y, bIsPressed);
+	m_CreditButton->HandleTouchEvent(x, y, bIsPressed);
 	m_SettingButton->HandleTouchEvent(x, y, bIsPressed);
 	m_QuitButton->HandleTouchEvent(x, y, bIsPressed);
 }

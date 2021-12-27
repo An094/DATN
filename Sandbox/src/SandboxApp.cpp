@@ -5,6 +5,7 @@
 #include "GameStates/GSPlay.h"
 #include "GameStates/GSCustom.h"
 #include "GameStates/GSSetting.h"
+#include "GameStates/GSCredit.h"
 
 void Init(Window*& window)
 {
@@ -13,6 +14,7 @@ void Init(Window*& window)
 	GameStateMachine::GetInstance()->AddState(std::make_shared<GSCustom>());
 	GameStateMachine::GetInstance()->AddState(std::make_shared<GSPlay>());
 	GameStateMachine::GetInstance()->AddState(std::make_shared<GSSetting>());
+	GameStateMachine::GetInstance()->AddState(std::make_shared<GSCredit>());
 
 	window = new Window(widthScreen, heightScreen, nameWindow);
 }
