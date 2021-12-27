@@ -4,6 +4,7 @@
 #include "GameStates/GSMenu.h"
 #include "GameStates/GSPlay.h"
 #include "GameStates/GSCustom.h"
+#include "GameStates/GSSetting.h"
 
 void Init(Window*& window)
 {
@@ -11,6 +12,7 @@ void Init(Window*& window)
 	GameStateMachine::GetInstance()->AddState(std::make_shared<GSMenu>());
 	GameStateMachine::GetInstance()->AddState(std::make_shared<GSCustom>());
 	GameStateMachine::GetInstance()->AddState(std::make_shared<GSPlay>());
+	GameStateMachine::GetInstance()->AddState(std::make_shared<GSSetting>());
 
 	window = new Window(widthScreen, heightScreen, nameWindow);
 }

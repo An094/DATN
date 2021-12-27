@@ -18,7 +18,7 @@ namespace EngineCore
 {
 
 	std::shared_ptr<Application> Application::s_Instance = nullptr;
-	Application::Application()
+	Application::Application():isPlayMusic(true), isPlaySound(true)
 	{
 		m_CurrentTime = 0.0f;
 		m_FpsCount = 0;

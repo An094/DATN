@@ -15,6 +15,8 @@ namespace EngineCore
 		std::shared_ptr<OrthographicCamera> m_Camera;
 		float m_CurrentTime;
 		int m_FpsCount;
+		bool isPlayMusic;
+		bool isPlaySound;
 	public:
 		static std::shared_ptr<Application> GetInstance()
 		{
@@ -32,5 +34,8 @@ namespace EngineCore
 		void HandleKeyEvent(int key, bool isPressed);
 		void HandleTouchEvent(double xpos, double ypos, bool isPressed);
 		void Exit();
+		void TurnOnMusic() { isPlayMusic = true; }
+		void TurnOffMusic() { isPlayMusic = false; }
+		bool IsPlayMusic() { return isPlayMusic; }
 	};
 }

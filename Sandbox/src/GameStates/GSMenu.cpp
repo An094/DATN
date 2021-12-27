@@ -46,7 +46,7 @@ void GSMenu::Init()
 		});
 
 	//Sound
-	EngineCore::ResourceManager::GetInstance()->PlaySound(EngineCore::AUDIO_TYPE::MUSIC, "music_game.wav", true);
+	EngineCore::ResourceManager::GetInstance()->PlaySound(EngineCore::AUDIO_TYPE::MUSIC, "menu.mp3", true);
 }
 
 void GSMenu::Update(float deltaTime)

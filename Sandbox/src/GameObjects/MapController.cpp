@@ -177,6 +177,12 @@ MapController::MapController(int level): isInIntro(true), timeStopSwitch(0.0f), 
 	m_BackButton->SetSize(50, 50);
 	m_BackButton->SetOnClick([]()
 		{
+			bool condition = EngineCore::Application::GetInstance()->IsPlayMusic();
+			if (condition)
+			{
+				EngineCore::ResourceManager::GetInstance()->PauseSound("music_game.wav");
+				EngineCore::ResourceManager::GetInstance()->PlaySound(EngineCore::AUDIO_TYPE::MUSIC, "menu.mp3", true);
+			}
 			(EngineCore::Application::GetInstance()->GetCamera())->ResetMatrix();
 			EngineCore::GameStateMachine::GetInstance()->PopState();
 		});

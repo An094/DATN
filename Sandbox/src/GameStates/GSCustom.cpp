@@ -3,6 +3,7 @@
 #include "GameStateManager/GameStateMachine.h"
 #include "GameManager/ResourceManager.h"
 #include "GSPlay.h"
+#include "Application.h"
 extern GLint widthScreen;
 extern GLint heightScreen;
 int avatar;
@@ -60,6 +61,12 @@ void GSCustom::Init()
 	m_PlayButton->SetSize(200, 100);
 	m_PlayButton->SetOnClick([]()
 		{
+			bool condition = EngineCore::Application::GetInstance()->IsPlayMusic();
+			if (condition)
+			{
+				EngineCore::ResourceManager::GetInstance()->PauseSound("menu.mp3");
+				EngineCore::ResourceManager::GetInstance()->PlaySound(EngineCore::AUDIO_TYPE::MUSIC, "music_game.wav", true);
+			}
 			EngineCore::GameStateMachine::GetInstance()->ChangeState(3);
 		});
 
