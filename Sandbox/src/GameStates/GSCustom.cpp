@@ -33,9 +33,9 @@ void GSCustom::Init()
 	tmp->SetSize(80, 80);
 	m_ListPlayerAvatar.push_back(tmp);
 
-	tmp = std::make_shared<EngineCore::SpriteAnimation2D>("Poo/poo1_down.tga", "Texture", "Animation", 4, 0.1f);
+	tmp = std::make_shared<EngineCore::SpriteAnimation2D>("Poo/poo3_down.tga", "Texture", "Animation", 6, 0.1f);
 	tmp->SetPosition(widthScreen / 2, 150);
-	tmp->SetSize(50, 50);
+	tmp->SetSize(80, 80);
 	m_ListPlayerAvatar.push_back(tmp);
 
 	m_PlayerAvatar = m_ListPlayerAvatar[0];
@@ -65,7 +65,8 @@ void GSCustom::Init()
 			if (condition)
 			{
 				EngineCore::ResourceManager::GetInstance()->PauseSound("menu.mp3");
-				EngineCore::ResourceManager::GetInstance()->PlaySound(EngineCore::AUDIO_TYPE::MUSIC, "music_game.wav", true);
+				//EngineCore::ResourceManager::GetInstance()->PlaySound(EngineCore::AUDIO_TYPE::MUSIC, "music_game.wav", true);
+				EngineCore::ResourceManager::GetInstance()->PlaySound(EngineCore::AUDIO_TYPE::MUSIC, "Fluffing-a-Duck.mp3", true);
 			}
 			EngineCore::GameStateMachine::GetInstance()->ChangeState(3);
 		});

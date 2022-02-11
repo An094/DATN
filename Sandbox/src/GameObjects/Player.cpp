@@ -13,13 +13,13 @@ Player::Player(DIRECTION dir) : DynamicObject(dir, 150.f) , isAlive(true), KEY(0
 	m_ListTexture.push_back(tmpTexture);
 	tmpTexture = EngineCore::ResourceManager::GetInstance()->GetTexture("Poo/poo_left.tga");
 	m_ListTexture.push_back(tmpTexture);
-	tmpTexture = EngineCore::ResourceManager::GetInstance()->GetTexture("Poo/poo1_up.tga");
+	tmpTexture = EngineCore::ResourceManager::GetInstance()->GetTexture("Poo/poo3_up.tga");
 	m_ListTexture.push_back(tmpTexture);
-	tmpTexture = EngineCore::ResourceManager::GetInstance()->GetTexture("Poo/poo1_right.tga");
+	tmpTexture = EngineCore::ResourceManager::GetInstance()->GetTexture("Poo/poo3_right.tga");
 	m_ListTexture.push_back(tmpTexture);
-	tmpTexture = EngineCore::ResourceManager::GetInstance()->GetTexture("Poo/poo1_down.tga");
+	tmpTexture = EngineCore::ResourceManager::GetInstance()->GetTexture("Poo/poo3_down.tga");
 	m_ListTexture.push_back(tmpTexture);
-	tmpTexture = EngineCore::ResourceManager::GetInstance()->GetTexture("Poo/poo1_left.tga");
+	tmpTexture = EngineCore::ResourceManager::GetInstance()->GetTexture("Poo/poo3_left.tga");
 	m_ListTexture.push_back(tmpTexture);
 
 	SetSprite(std::make_shared<EngineCore::SpriteAnimation2D>("Poo/poo_up.tga", "Texture", "Animation", 6, 0.1f));
@@ -30,8 +30,6 @@ Player::Player(DIRECTION dir) : DynamicObject(dir, 150.f) , isAlive(true), KEY(0
 
 void Player::Update(float deltaTime)
 {
-	//std::cout << "Can Up: " << CanUp << std::endl;
-	//std::cout << "Can Down: " << CanDown << std::endl;
 	if (KEY == GLFW_KEY_W && CanUp && isAlive)
 	{
 		SetDirection(DIRECTION::UP);
