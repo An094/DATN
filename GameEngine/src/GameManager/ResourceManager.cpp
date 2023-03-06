@@ -39,7 +39,7 @@ namespace EngineCore
 		for (int i = 0; i < numModel; i++)
 		{
 			std::getline(ss, strtmp, '\n');
-			strtmp = strtmp.substr(0, strtmp.size() - 1);
+			strtmp = strtmp.substr(0, strtmp.size());
 			AddModel(strtmp);
 		}
 		std::getline(ss, strtmp, '\n');
@@ -47,7 +47,7 @@ namespace EngineCore
 		for (int i = 0; i < numShader; i++)
 		{
 			std::getline(ss, strtmp, '\n');
-			strtmp = strtmp.substr(0, strtmp.size() - 1);
+			strtmp = strtmp.substr(0, strtmp.size());
 			AddShader(strtmp);
 		}
 		m_Soloud = SoLoud::Soloud();
